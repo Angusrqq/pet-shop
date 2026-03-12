@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bellota:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Pangolin&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/"><h1>Зоомагазин</h1></a>
+
+            <nav>
+                <a href="/about">О магазине</a>
+                <a href="/catalog">Каталог</a>
+                <a href="/delivery">Доставка</a>
+
+                <a href="/auth" class="nav-with-icon">
+                    <img class="header-icon" src="{% static 'icons/user.svg' %}" alt="Войти">
+                    <span>Войти</span>
+                </a>
+
+                <a href="/cart" class="nav-with-icon">
+                    <img class="header-icon" src="{% static 'icons/shopping-cart.svg' %}" alt="Корзина">
+                    <span>Корзина</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -4,7 +4,60 @@
     box-sizing: border-box;
 }
 
-h1{
-    color: #427436;
-    padding: 60px;
+body{
+    font-family: "Bellota", system-ui;
+    font-weight: 700;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header{
+    padding: 30px 0;
+    background-color: rgb(254, 255, 212);
+}
+
+header .container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav span{
+    display: block;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem; 
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.nav-with-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.2rem;
+    line-height: 1.2;
+    font-size: 16px;
+}
+
+nav a:hover, .nav-with-icon .header-icon:hover{
+    filter: invert(41%) sepia(87%) saturate(1467%) hue-rotate(-20deg) brightness(97%) contrast(101%);
+}
+
+.nav-with-icon .header-icon,
+.nav-with-icon  .header-icon {
+    width: 20px;
+    height: 20px;
 }
