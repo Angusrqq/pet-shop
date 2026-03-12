@@ -1,3 +1,19 @@
+[data-theme='light'] {
+    --bg: #ffffff;
+    --text: #000000;
+    --darker-text: #333333;
+    --accents: #ff9100;
+    --header-bg: #ffffff;
+}
+
+[data-theme='dark'] {
+    --bg: #252525;
+    --text: #ffffff;
+    --accents: #e5ff00;
+    --darker-text: #dddddd;
+    --header-bg: #252525;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -7,16 +23,18 @@
 body{
     font-family: "Bellota", system-ui;
     font-weight: 700;
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 .container{
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
 }
 
 header{
     padding: 30px 0;
-    background-color: rgb(254, 255, 212);
+    background-color: var(--header-bg);
 }
 
 header .container{
@@ -36,10 +54,19 @@ nav {
 }
 
 nav a {
-    color: #333;
+    color: var(--darker-text);
     text-decoration: none;
     font-weight: 600;
     font-size: 1.1rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--darker-text);
+}
+
+a:hover{
+    color: var(--accents);
 }
 
 .nav-with-icon {
@@ -52,12 +79,17 @@ nav a {
     font-size: 16px;
 }
 
-nav a:hover, .nav-with-icon .header-icon:hover{
-    filter: invert(41%) sepia(87%) saturate(1467%) hue-rotate(-20deg) brightness(97%) contrast(101%);
+nav a:hover, .svg-icon:hover {
+    color: var(--accents);
+    fill: var(--accents);
 }
 
 .nav-with-icon .header-icon,
 .nav-with-icon  .header-icon {
+    width: 20px;
+    height: 20px;
+}
+.svg-icon {
     width: 20px;
     height: 20px;
 }

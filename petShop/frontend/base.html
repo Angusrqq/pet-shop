@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{% if request.user.is_authenticated %}{{ request.user.theme }}{% else %}dark{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,12 +21,18 @@
                 <a href="/delivery">Доставка</a>
 
                 <a href="/auth" class="nav-with-icon">
-                    <img class="header-icon" src="{% static 'icons/user.svg' %}" alt="Войти">
+                    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xml:space="preserve" width="512" height="512">
+                        <circle cx="256" cy="128" r="128"/>
+                        <path d="M256 298.667c-105.99.118-191.882 86.01-192 192C64 502.449 73.551 512 85.333 512h341.333c11.782 0 21.333-9.551 21.333-21.333-.117-105.99-86.009-191.883-191.999-192"/>
+                    </svg>
                     <span>Войти</span>
                 </a>
 
                 <a href="/cart" class="nav-with-icon">
-                    <img class="header-icon" src="{% static 'icons/shopping-cart.svg' %}" alt="Корзина">
+                    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="512" height="512">
+                        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077Z"/>
+                        <circle cx="7" cy="22" r="2"/><circle cx="17" cy="22" r="2"/>
+                    </svg>
                     <span>Корзина</span>
                 </a>
             </nav>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Регистрация</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field }}<br>
+            {% endfor %}
+
+            <button type="submit" name="Create User">Register</button>
+        </form>
+        <a href="{% url 'auth' %}">Уже есть аккаунт?</a>
+    </div>
+{% endblock %}

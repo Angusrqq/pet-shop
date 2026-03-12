@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 
 def generate_track():
     from random import randint
@@ -8,6 +9,10 @@ def generate_track():
         unique_number = randint(1000000000, 9999999999)
     return str(unique_number)
 # Create your models here.
+
+class CustomUser(AbstractUser):
+    THEME_CHOICES = [('light', 'Light'), ('dark', 'Dark')]
+    theme = models.CharField(choices=THEME_CHOICES, default='light', max_length=10)
 
 class Orders(models.Model):
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
