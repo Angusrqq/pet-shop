@@ -1,7 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" data-theme="{% if request.user.is_authenticated %}{{ request.user.theme }}{% else %}light{% endif %}">
+<html lang="en">
 <head>
+    <script>
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
@@ -26,7 +30,6 @@
                         <circle cx="256" cy="128" r="128"/>
                         <path d="M256 298.667c-105.99.118-191.882 86.01-192 192C64 502.449 73.551 512 85.333 512h341.333c11.782 0 21.333-9.551 21.333-21.333-.117-105.99-86.009-191.883-191.999-192"/>
                     </svg>
-                    <!-- <i class="fa-solid fa-user"></i> -->
                     <span>Войти</span>
                 </a>
 
@@ -37,6 +40,15 @@
                     </svg>
                     <span>Корзина</span>
                 </a>
+
+                <button id="eye-btn">
+                    <div class="eye">
+                        <div class="lid"></div>
+                        <div class="iris">
+                        <div class="pupil"></div>
+                        </div>
+                    </div>
+                </button>
             </nav>
         </div>
     </header>
@@ -45,5 +57,7 @@
         {% block content %}
         {% endblock %}
     </div>
+
+    <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

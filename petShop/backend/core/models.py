@@ -12,7 +12,6 @@ def generate_track():
 
 class CustomUser(AbstractUser):
     THEME_CHOICES = [('light', 'Light'), ('dark', 'Dark')]
-    theme = models.CharField(choices=THEME_CHOICES, default='light', max_length=10)
 
 class Order(models.Model):
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

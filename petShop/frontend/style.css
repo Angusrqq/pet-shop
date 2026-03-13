@@ -28,6 +28,10 @@
 
 /* general */
 
+*{
+    transition: background 1s, color 1s;
+}
+
 body{
     font-family: "Bellota", system-ui;
     font-weight: 900;
@@ -99,7 +103,6 @@ a:hover{
 
 nav a:hover, .svg-icon:hover {
     color: var(--accents);
-    fill: var(--accents);
 }
 
 .nav-with-icon .header-icon,
@@ -111,7 +114,7 @@ nav a:hover, .svg-icon:hover {
 .svg-icon {
     width: 20px;
     height: 20px;
-    /* fill: var(--darker-text); */
+    fill: currentColor;
 }
 
 /* auth */
@@ -158,4 +161,75 @@ nav a:hover, .svg-icon:hover {
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+
+/* theme-switcher-button */
+
+#eye-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.eye {
+    width: 45px;
+    height: 45px;
+    border-radius: 40%;
+    background: var(--bg);
+    border: 2px solid var(--darker-text);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.iris {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accents);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: background 0.3s, transform 0.08s ease-out;
+}
+
+.pupil {
+    width: 18px;
+    height: 18px;
+    background: #1a1008;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.15s ease, height 0.15s ease, border-radius 0.15s ease;
+}
+
+.eye:not(.cat) .pupil {
+    border-radius: 50%;
+}
+
+.lid {
+    position: absolute;
+    left: 0; right: 0;
+    top: 0;
+    height: 0;
+    background: var(--bg);
+    transition: background 0.3s;
+    border-radius: 0 0 50% 50%;
+}
+
+@keyframes blink {
+    0%, 100% { height: 0; }
+    50%       { height: 100%; }
+}
+
+.eye.blinking .lid {
+    animation: blink 0.28s ease forwards;
+}
+
+.eye.cat .pupil {
+    border-radius: 50%;
+    width: 6px;
+    height: 18px;
 }
