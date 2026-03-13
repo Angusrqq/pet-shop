@@ -4,7 +4,19 @@
 
 {% block content %}
     <div class="container">
-        <h3>Каталог пока в разработке</h3>
-        <p>Тут какой-то текст</p>
+        <h2>Каталог</h2>
+        <ul class="product-list">
+            {% for product in products %}
+                <li class="product-item">
+                    <a href="{% url 'product' product.pk %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100">
+                    </a>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p>{{ product.price }} руб.</p>
+                    <a href="" class="add-to-cart-btn">В корзину</a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}

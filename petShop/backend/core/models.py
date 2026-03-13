@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 def generate_track():
     from random import randint
     unique_number = randint(1000000000, 9999999999)
-    while Orders.objects.filter(track_number=unique_number).exists():
+    while Order.objects.filter(track_number=unique_number).exists():
         unique_number = randint(1000000000, 9999999999)
     return str(unique_number)
 # Create your models here.
@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
     THEME_CHOICES = [('light', 'Light'), ('dark', 'Dark')]
     theme = models.CharField(choices=THEME_CHOICES, default='light', max_length=10)
 
-class Orders(models.Model):
+class Order(models.Model):
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     client_name = models.CharField(max_length=100)
     client_last_name = models.CharField(blank=True, max_length=100)
@@ -25,18 +25,18 @@ class Orders(models.Model):
     address = models.TextField(blank=True)
     track_number = models.CharField(blank=True, unique=True, null=True, default=generate_track)
 
-class Products(models.Model):
-    tags = models.CharField()
+class Product(models.Model):
+    tags = models.TextField()
     name = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to="product_images/")
     stock = models.IntegerField(default=0)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=0)
 
-class Purchases(models.Model):
-    order = models.ForeignKey(Orders, on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
-    price = models.FloatField()
+class Purchase(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=0)
     quantity = models.IntegerField()
 
     def total_price(self):

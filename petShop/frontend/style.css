@@ -6,6 +6,8 @@
     --darker-text: #422318;
     --accents: #ffa71a;
     --header-bg: #fffdf0;
+    --buttons: #422318;
+    --button-txt: #fffdf0;
 }
 
 [data-theme='dark'] {
@@ -14,6 +16,8 @@
     --accents: #e5ff00;
     --darker-text: #dddddd;
     --header-bg: #252525;
+    --buttons: #dddddd;
+    --button-txt: #252525;
 }
 
 *{
@@ -46,8 +50,9 @@ header{
     position: sticky;
     top: 0;
     width: 100%; 
-    padding: 30px 0;
+    padding: 15px 0;
     background-color: var(--header-bg);
+    box-shadow: 0 0 5px #8181815d;
 }
 
 header .container{
@@ -106,6 +111,7 @@ nav a:hover, .svg-icon:hover {
 .svg-icon {
     width: 20px;
     height: 20px;
+    /* fill: var(--darker-text); */
 }
 
 /* auth */
@@ -124,4 +130,32 @@ nav a:hover, .svg-icon:hover {
     align-items: center;
     justify-content: center;
     gap: 5px;
+}
+
+/* catalog */
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    list-style: none;
+}
+
+.product-item {
+    flex: 1;
+    max-width: 20%;
+    border: 2px solid var(--buttons);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.add-to-cart-btn {
+    display: block;
+    margin-top: 10px;
+    background-color: var(--buttons);
+    color: var(--button-txt);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
 }

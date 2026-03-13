@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpRequest
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthForm
+from .models import Product
 
 def main(request):
     return render(request, 'main.html')
@@ -11,7 +12,12 @@ def about(request):
     return render(request, 'about.html')
 
 def catalog(request):
-    return render(request, 'catalog.html')
+    products = Product.objects.all()
+    return render(request, 'catalog.html', {'products': products})
+
+def product(request, pk):
+    product = Product.objects.get(pk=pk)
+    return render(request, 'product.html', {'product': product})
 
 def delivery(request):
     return render(request, 'delivery.html')
