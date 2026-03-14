@@ -20,6 +20,10 @@
     --button-txt: #252525;
 }
 
+:root{
+    --elastic-out: cubic-bezier(0.5, 1.8, 0.3, 0.8);
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -29,7 +33,7 @@
 /* general */
 
 *{
-    transition: background 1s, color 1s;
+    transition: background 0.4s, color 0.4s;
 }
 
 body{
@@ -225,7 +229,7 @@ nav a:hover, .svg-icon:hover {
 }
 
 .eye.blinking .lid {
-    animation: blink 0.28s ease forwards;
+    animation: blink 0.4s ease forwards;
 }
 
 .eye.cat .pupil {
