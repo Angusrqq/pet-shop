@@ -23,6 +23,70 @@ function apply(t) {
     pupilEl.style.borderRadius = '';
 }
 
+let searchInterval = null;
+let searchStep = 0;
+const MAX_STEPS = 8;
+let closeTimeout = null;
+
+function searchMove() {
+    if (!searchInterval) return;
+
+    const progress = searchStep / MAX_STEPS;
+    
+    const currentDilation = parseFloat(pupilEl.style.width);
+    const maxDilation = theme === 'light' ? T.light.br + T.light.me : T.dark.br + T.dark.me;
+    const moveIntensity = currentDilation / maxDilation;
+    const range = 12 * moveIntensity * (1 - progress * 0.7);
+    const rx = (Math.random() - 0.5) * 2 * range;
+    const ry = (Math.random() - 0.5) * 2 * range;
+    irisEl.style.transform = `translate(calc(-50% + ${rx}px), calc(-50% + ${ry}px))`;
+
+    const delay = 200 + progress * 800;
+
+    searchStep++;
+
+    if (searchStep >= MAX_STEPS) {
+        if (theme === 'light') {
+            pupilEl.style.width        = T.light.br + 'px';
+            pupilEl.style.height       = T.light.br + 'px';
+        } else {
+            pupilEl.style.width        = T.dark.br + 'px';
+            pupilEl.style.height       = T.dark.me + 'px';
+        }
+        closeTimeout = setTimeout(() => {
+            irisEl.style.transform = `translate(-50%, -50%)`;
+            closeTimeout = setTimeout(() => eyeEl.classList.add('closed'), 300);
+        }, 400);
+        searchInterval = null;
+        return;
+    }
+
+    searchInterval = setTimeout(searchMove, delay);
+}
+
+document.addEventListener('mouseout', (e) => {
+    if (e.relatedTarget) return;
+    searchStep = 0;
+    searchInterval = setTimeout(searchMove, 200);
+});
+
+document.addEventListener('mouseover', (e) => {
+    if (e.relatedTarget) return;
+    clearTimeout(searchInterval);
+    searchInterval = null;
+    searchStep = 0;
+
+    if (eyeEl.classList.contains('closed') || closeTimeout){
+        clearTimeout(closeTimeout);
+        closeTimeout = null;
+        eyeEl.classList.remove('closed');
+        eyeEl.classList.add('opening');
+        setTimeout(() => eyeEl.classList.remove('opening'), 300);
+    }
+
+    irisEl.style.transform = `translate(-50%, -50%)`;
+});
+
 eyeBtn.addEventListener('click', () => {
     eyeEl.classList.add('blinking');
 

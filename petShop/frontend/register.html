@@ -13,6 +13,7 @@
 
             <button type="submit" name="Create User">Register</button>
         </form>
+        {{ form.errors }}
         <a href="{% url 'auth' %}">Уже есть аккаунт?</a>
     </div>
 {% endblock %}

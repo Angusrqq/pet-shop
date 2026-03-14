@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpRequest
-from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthForm
 from .models import Product
@@ -22,39 +23,38 @@ def product(request, pk):
 def delivery(request):
     return render(request, 'delivery.html')
 
-def auth(request):
-    return render(request, 'auth.html')
+def auth(request: HttpRequest):
+    form = CustomAuthForm()
+    if request.method == 'POST':
+        form = CustomAuthForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password) # doesnt the form.is_valid() check it already?
+
+            if user is not None:
+                login(request, user)
+                return redirect('main')
+            else:
+                messages.info(request, 'Неправильный логин или пароль')
+
+    context = {'form': form}
+    return render(request, 'auth.html', context)
+
+def logout(request):
+    logout(request)
+    return redirect('auth')
 
 def cart(request):
     return render(request, 'cart.html')
 
-def register(request):
+def register(request: HttpRequest):
     form = CustomUserCreationForm()
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегистрировались!')
             return redirect('auth')
     context = {'form': form}
     return render(request, 'register.html', context)
-
-def auth(request: HttpRequest):
-    form = CustomAuthForm()
-    if request.method == 'POST':
-        form = CustomAuthForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('main')
-    context = {'form': form}
-    return render(request, 'auth.html', context)
-
-@login_required
-def set_theme(request: HttpRequest):
-    if request.method == 'POST':
-        theme = request.POST.get('theme', 'light')
-        if theme in ('light', 'dark'):
-            request.user.theme = theme
-            request.user.save(update_fields=['theme'])
-            return JsonResponse({'status': 'ok', 'theme': theme})
-    return JsonResponse({'status': 'error'}, status=400)
