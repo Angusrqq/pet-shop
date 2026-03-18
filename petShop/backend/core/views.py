@@ -41,7 +41,7 @@ def auth(request: HttpRequest):
     context = {'form': form}
     return render(request, 'auth.html', context)
 
-def logout(request):
+def logout_page(request):
     logout(request)
     return redirect('auth')
 
