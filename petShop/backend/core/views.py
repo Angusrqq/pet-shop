@@ -45,9 +45,6 @@ def logout_page(request):
     logout(request)
     return redirect('auth')
 
-def cart(request):
-    return render(request, 'cart.html')
-
 def register(request: HttpRequest):
     form = CustomUserCreationForm()
     if request.method == 'POST':
