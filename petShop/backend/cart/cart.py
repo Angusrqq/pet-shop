@@ -10,7 +10,8 @@ class Cart:
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-        
+        self._sync_price()
+
     def add(self, product: Product, quantity=1, override_quantity=False):
         product_id = str(product.id)
         if product_id not in self.cart:
@@ -63,7 +64,11 @@ class Cart:
     def get_total_cart_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item
                     in self.cart.values())
-        
+
+    def get_products(self):
+        product_ids = self.cart.keys()
+        return Product.objects.filter(id__in=product_ids)
+
     def clear_cart(self):
         del self.session[settings.CART_SESSION_ID]
         self.save()

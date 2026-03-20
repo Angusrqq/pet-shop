@@ -40,3 +40,14 @@ class Purchase(models.Model):
 
     def total_price(self):
         return self.price * self.quantity
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    included_tags = models.TextField()
+    excluded_tags = models.TextField()
+    
+    def __str__(self):
+        return self.name
+    
+    # def get_products(self):
+    #     return Product.objects.filter(tags__contains=self.included_tags).exclude(tags__contains=self.excluded_tags)

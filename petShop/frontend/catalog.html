@@ -13,10 +13,10 @@
                     </a>
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.description }}</p>
-                    <p>{{ product.price }} руб.</p>
+                    <p>{{ product.price }} ₽.</p>
                     <form action="{% url 'cart:add_to_cart' product.id %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="add-to-cart-btn">В корзину</button>
+                        <button type="submit" class="add-to-cart-btn">В Корзину</button>
                     </form>
                 </li>
             {% endfor %}

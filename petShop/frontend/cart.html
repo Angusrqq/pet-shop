@@ -4,6 +4,82 @@
 
 {% block content %}
     <div class="container">
+        <a class="back-link" href="{% url 'core:catalog' %}">← Вернуться в каталог</a>
         <h1>Корзина</h1>
+        
+        {% if cart|length == 0 %}
+            <p class="empty">Ваша корзина пуста.</p>
+        
+        {% else %}
+            <div class="layout">
+            
+                <!-- items -->
+                <div class="items-col">
+                {% for item in cart %}
+                <div class="cart-item">
+                    <a href="{% url 'core:product' item.product.pk %}">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"/>
+                    <div class="item-info">
+                    <div class="item-name"><a href="{% url 'core:product' item.product.pk %}">{{ item.product.name }}</div>
+                    </div>
+                    </a>
+            
+                    <div class="qty-block">
+                    <div class="qty-controls">
+                        <form method="post" action="{% url 'cart:cart_decrement' item.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">−</button>
+                        </form>
+                        <form method="post" action="{% url 'cart:cart_update' item.product.id %}">
+                            {% csrf_token %}
+                            <input
+                            class="qty-value"
+                            type="number"
+                            name="quantity"
+                            value="{{ item.quantity }}"
+                            min="1"
+                            onchange="if(!this.value || this.value < 1) this.value = 1; this.form.submit();"
+                            />
+                        </form>
+                        <form method="post" action="{% url 'cart:add_to_cart' item.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">+</button>
+                        </form>
+                    </div>
+                    <span class="unit-price">{{ item.price }} ₽ / шт.</span>
+                    </div>
+            
+                    <div class="item-total">{{ item.total_price }} ₽</div>
+            
+                    <div class="item-actions">
+                    <form method="post" action="{% url 'cart:remove_from_cart' item.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="icon-btn delete" title="Remove">
+                        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                        </button>
+                    </form>
+                    </div>
+            
+                </div>
+                {% endfor %}
+                </div>
+            
+                <!-- summary -->
+                <div class="summary-col">
+                <div class="summary-total">
+                    <span class="label">Всего</span>
+                    <span class="value">{{ cart.get_total_cart_price }} ₽</span>
+                </div>
+            
+                <button class="checkout-btn">Оформить заказ</button>
+            
+                <form class="clear-form" method="post" action="{% url 'cart:clear_cart' %}">
+                    {% csrf_token %}
+                    <button type="submit">Очистить корзину</button>
+                </form>
+                </div>
+            
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
