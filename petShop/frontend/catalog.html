@@ -8,13 +8,16 @@
         <ul class="product-list">
             {% for product in products %}
                 <li class="product-item">
-                    <a href="{% url 'product' product.pk %}">
+                    <a href="{% url 'core:product' product.pk %}">
                         <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100">
                     </a>
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.description }}</p>
                     <p>{{ product.price }} руб.</p>
-                    <a href="" class="add-to-cart-btn">В корзину</a>
+                    <form action="{% url 'cart:add_to_cart' product.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="add-to-cart-btn">В корзину</button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>

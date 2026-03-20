@@ -1,7 +1,6 @@
 from decimal import Decimal
 from django.conf import settings
 from django.http import JsonResponse, HttpRequest
-# from petShop.backend.core.models import Product
 from core.models import Product
 
 class Cart:
@@ -28,7 +27,22 @@ class Cart:
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
-        
+    
+    def _sync_price(self):
+        product_ids = list(self.cart.keys())
+        if not product_ids:
+            return
+        products = Product.objects.filter(id__in=product_ids).values("id", "price")
+        update = False
+        for product in products:
+            product_id = str(product["id"])
+            new_price = str(product["price"])
+            if self.cart[product_id]["price"] != new_price:
+                self.cart[product_id]["price"] = new_price
+                update = True
+        if update:
+            self.save()
+    
     def save(self):
         self.session.modified = True
     
