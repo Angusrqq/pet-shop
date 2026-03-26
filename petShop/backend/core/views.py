@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthForm
-from .models import Product
+from .models import Product, Category
+from django.db.models import Q
 
 def main(request):
     return render(request, 'main.html')
@@ -12,8 +13,12 @@ def main(request):
 def about(request):
     return render(request, 'about.html')
 
-def catalog(request):
-    products = Product.objects.all()
+def catalog(request: HttpRequest):
+    category_id = request.GET.get('category_id', -1)
+    if not Category.objects.filter(pk=category_id).exists():
+        products = Product.objects.all()
+    else:
+        products = Category.objects.get(pk=category_id).get_products()
     return render(request, 'catalog.html', {'products': products})
 
 def product(request, pk):
@@ -23,7 +28,10 @@ def product(request, pk):
 def delivery(request):
     return render(request, 'delivery.html')
 
+
 def auth(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect('core:main')
     form = CustomAuthForm()
     if request.method == 'POST':
         form = CustomAuthForm(request, data=request.POST)
@@ -34,24 +42,46 @@ def auth(request: HttpRequest):
 
             if user is not None:
                 login(request, user)
-                return redirect('main')
-            else:
-                messages.info(request, 'Неправильный логин или пароль')
+                messages.success(request, 'Вы успешно авторизовались!')
+                return redirect('core:main')
+        else:
+            # messages.error(request, form.errors)
+            messages.error(request, 'Неправильный логин или пароль')
 
     context = {'form': form}
     return render(request, 'auth.html', context)
 
+@login_required(login_url='core:auth')
 def logout_page(request):
     logout(request)
-    return redirect('auth')
+    messages.info(request, 'Вы вышли из аккаунта')
+    return redirect('core:auth')
 
 def register(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect('core:main')
     form = CustomUserCreationForm()
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Вы успешно зарегистрировались!')
-            return redirect('auth')
+            return redirect('core:auth')
+        else:
+            messages.error(request, form.errors)
     context = {'form': form}
     return render(request, 'register.html', context)
+
+def categories(request):
+    categories = Category.objects.all()
+    return render(request, 'categories.html', {"categories": categories})
+
+def search(request: HttpRequest):
+    if request.method == 'POST':
+        searchbox = request.POST.get('searchbox')
+        products = Product.objects.filter(Q(name__icontains=searchbox) | Q(description__icontains=searchbox) | Q(category__name__icontains=searchbox) | Q(tags__icontains=searchbox))
+        if products.count() == 0:
+            messages.error(request, 'Ничего не найдено')
+        return render(request, 'catalog.html', {'products': products})
+    else:
+        return render(request, 'catalog.html')

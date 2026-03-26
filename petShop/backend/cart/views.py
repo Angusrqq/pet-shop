@@ -16,8 +16,11 @@ def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
     if cart.cart.get(str(product_id)) and product.stock < cart.cart[str(product_id)]['quantity'] + 1:
-        messages.info(request, 'Недостаточно товара в наличии')
+        messages.error(request, 'Недостаточно товара в наличии')
         return redirect('cart:cart')
+    
+    if cart.cart.get(str(product_id)) == None:
+        messages.success(request, 'Товар добавлен в корзину!')
 
     cart.add(product, quantity=1)
     return redirect('cart:cart')
@@ -45,6 +48,7 @@ def cart_decrement(request, product_id):
 def clear_cart(request):
     cart = Cart(request)
     cart.clear_cart()
+    messages.success(request, 'Корзина очищена!')
     return redirect('cart:cart')
 
 @require_POST

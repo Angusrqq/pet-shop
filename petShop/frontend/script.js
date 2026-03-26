@@ -1,3 +1,16 @@
+// Automatically hide messages after 5 seconds (5000 milliseconds)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.alert').forEach((el, i) => {
+        const delay = 5000 + i * 80;
+        setTimeout(() => {
+            if (!el.isConnected) return;
+            el.classList.add('dismissing');
+            setTimeout(() => el.remove(), 400);
+        }, delay);
+    });
+});
+
+// Eyes stuff
 const T = {
     light: { br: 13, me: 11 },
     dark:  { br: 6,  me: 22 }

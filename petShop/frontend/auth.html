@@ -2,15 +2,6 @@
 
 {% block title %}Авторизация{% endblock %}
 
-<!-- later for implementation in base.html -->
-<!-- {% block messages %}
-    {% if messages %}
-        {% for message in messages %}
-            <p id="message">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-{% endblock %} -->
-
 {% block content %}
     <div class="container auth">
         <h2>Авторизация</h2>
@@ -22,7 +13,6 @@
 
             <button type="submit" name="Log in">Log in</button>
         </form>
-        {{ form.errors }}
         <a href="{% url 'core:register' %}">Нет аккаунта?</a>
     </div>
 {% endblock %}

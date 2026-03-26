@@ -25,12 +25,16 @@ class Order(models.Model):
     track_number = models.CharField(blank=True, unique=True, null=True, default=generate_track)
 
 class Product(models.Model):
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, null=True)
     tags = models.TextField()
     name = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to="product_images/")
     stock = models.IntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=0)
+    
+    def get_tags_list(self):
+        return self.tags.split(",")
 
 class Purchase(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -43,11 +47,13 @@ class Purchase(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    included_tags = models.TextField()
-    excluded_tags = models.TextField()
+    image = models.ImageField(upload_to="category_images/")
+    
+    class Meta:
+        verbose_name_plural = 'Categories'
     
     def __str__(self):
         return self.name
     
-    # def get_products(self):
-    #     return Product.objects.filter(tags__contains=self.included_tags).exclude(tags__contains=self.excluded_tags)
+    def get_products(self):
+        return Product.objects.filter(category=self)

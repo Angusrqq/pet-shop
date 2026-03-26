@@ -28,6 +28,7 @@
 
 :root{
     --elastic-out: cubic-bezier(0.5, 1.8, 0.3, 0.8);
+    --transition: background 0.4s, color 0.4s, transform 0.3s var(--elastic-out), opacity 0.15s ease, border 0.3s;
 }
 
 *{
@@ -39,7 +40,7 @@
 /* general */
 
 *{
-    transition: background 0.4s, color 0.4s, transform 0.3s var(--elastic-out), opacity 0.15s ease, border 0.3s;
+    transition: var(--transition);
 }
 
 body{
@@ -56,6 +57,152 @@ body{
 
 h3, h2{
     font-family: "Pangolin", cursive;
+}
+
+/* messages */
+
+.alert-messages {
+    position: fixed;
+    top: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: max-content;
+    max-width: min(480px, calc(100vw - 2rem));
+    pointer-events: none;
+}
+
+.alert {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem 0.75rem 0.9rem;
+    border-radius: 10px;
+    font-family: 'DM Sans', 'Segoe UI', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    box-shadow:
+        0 4px 16px rgba(0,0,0,0.12),
+        0 1px 4px rgba(0,0,0,0.08);
+    pointer-events: all;
+    cursor: default;
+
+    /* Slide in from top */
+    animation: slideDown 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.alert.dismissing {
+    animation: slideUp 0.35s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-22px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        max-height: 80px;
+        margin-bottom: 0;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.96);
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: -0.6rem;
+    }
+}
+
+/* Stagger each alert */
+.alert:nth-child(1) { animation-delay: 0s; }
+.alert:nth-child(2) { animation-delay: 0.08s; }
+.alert:nth-child(3) { animation-delay: 0.16s; }
+.alert:nth-child(4) { animation-delay: 0.24s; }
+
+/* ── Variants ── */
+.alert.success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+.alert.success .alert-icon::before { content: '✓'; color: #16a34a; font-weight: 700; }
+
+.alert.error, .alert.danger {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    color: #9f1239;
+}
+.alert.error .alert-icon::before,
+.alert.danger .alert-icon::before { content: '✕'; color: #e11d48; font-weight: 700; }
+
+.alert.warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+}
+.alert.warning .alert-icon::before { content: '!'; color: #d97706; font-weight: 800; }
+
+.alert.info, .alert.debug {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
+}
+.alert.info .alert-icon::before,
+.alert.debug .alert-icon::before { content: 'i'; color: #2563eb; font-style: italic; font-weight: 800; }
+
+/* Fallback for untagged */
+.alert:not(.success):not(.error):not(.danger):not(.warning):not(.info):not(.debug) {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+}
+.alert:not(.success):not(.error):not(.danger):not(.warning):not(.info):not(.debug) .alert-icon::before {
+    content: '·'; font-weight: 900; font-size: 1.2em;
+}
+
+.alert-icon {
+    font-size: 0.8rem;
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.alert-text {
+    flex: 1;
+}
+
+.alert-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    opacity: 0.45;
+    padding: 0 0 0 0.4rem;
+    line-height: 1;
+    color: inherit;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
+.alert-close:hover { opacity: 0.9; }
+
+/* Auto-dismiss after 5s */
+.alert {
+    --dismiss-delay: 5s;
 }
 
 /* header */
@@ -186,12 +333,13 @@ nav a:hover, .svg-icon:hover {
     position: absolute;
     right: -12px;
     color: var(--footer-text);
+    transition: var(--transition);
 }
 
 .footer-links a {
     color: var(--main-contrast);
     text-decoration: none;
-    transition: opacity 0.2s ease;
+    /* transition: opacity 0.2s ease; */
 }
 
 .footer-links a:hover {
