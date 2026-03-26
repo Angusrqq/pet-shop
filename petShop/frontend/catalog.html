@@ -8,7 +8,7 @@
         <ul class="product-list">
             {% for product in products %}
                 <li class="product-item">
-                    <a href="{% url 'core:product' product.pk %}">
+                    <a href="{% url 'catalog:product' product.pk %}">
                         <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100">
                     </a>
                     <h3>{{ product.name }}</h3>

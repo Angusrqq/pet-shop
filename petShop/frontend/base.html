@@ -31,17 +31,17 @@
     <header>
         <div class="container">
             <a href="/"><h1>Зоомагазин</h1></a>
-            <form method="POST" action="{%  url 'core:search' %}">
+            <form method="POST" action="{%  url 'search:search' %}">
                 {% csrf_token %}
                 <input type="text" name="searchbox" placeholder="Введите запрос...">
                 <button class="search" type="submit">Найти</button>
             </form>
             <nav>
                 <a href="/about">О магазине</a>
-                <a href="/categories">Категории</a>
+                <a href="{%  url 'categories:category_list' %}">Категории</a>
                 <a href="/delivery">Доставка</a>
                 {% if not user.is_authenticated %}
-                    <a href="/auth" class="nav-with-icon">
+                    <a href="{% url 'users:auth' %}" class="nav-with-icon">
                         <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xml:space="preserve" width="512" height="512">
                             <circle cx="256" cy="128" r="128"/>
                             <path d="M256 298.667c-105.99.118-191.882 86.01-192 192C64 502.449 73.551 512 85.333 512h341.333c11.782 0 21.333-9.551 21.333-21.333-.117-105.99-86.009-191.883-191.999-192"/>
@@ -49,7 +49,7 @@
                         <span>Войти</span>
                     </a>
                 {% else %}
-                    <a href="/logout" class="nav-with-icon">
+                    <a href="{% url 'users:logout' %}" class="nav-with-icon">
                         <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="none" viewBox="0 0 24 24">
                             <path fill-rule="evenodd" d="M8.25 5.25 9 4.5h9l.75.75v13.5l-.75.75H9l-.75-.75V16.5h1.5V18h7.5V6h-7.5v1.5h-1.5z" clip-rule="evenodd"/>
                             <path fill-rule="evenodd" d="M7.06 12.75h7.19v-1.5H7.06l1.72-1.72-1.06-1.06L4.19 12l3.53 3.53 1.06-1.06z" clip-rule="evenodd">

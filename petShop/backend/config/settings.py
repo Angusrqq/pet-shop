@@ -31,7 +31,7 @@ DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'core.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Application definition
 
@@ -42,8 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
-    'cart.apps.CartConfig',
+    'apps.users',
+    'apps.core',
+    'apps.cart',
+    'apps.catalog',
+    'apps.orders',
+    'apps.search',
+    'apps.categories',
     'mptt',
 ]
 
@@ -69,7 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processors.cart',
+                'apps.cart.context_processors.cart',
             ],
         },
     },

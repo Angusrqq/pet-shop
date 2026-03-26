@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container cart">
-        <a class="back-link" href="{% url 'core:catalog' %}">← Вернуться в каталог</a>
+        <a class="back-link" href="{% url 'catalog:catalog' %}">← Вернуться в каталог</a>
         <h1>Корзина</h1>
         
         {% if cart|length == 0 %}
@@ -17,7 +17,7 @@
                 <div class="items-col">
                 {% for item in cart %}
                 <div class="cart-item">
-                    <a href="{% url 'core:product' item.product.pk %}">
+                    <a href="{% url 'catalog:product' item.product.pk %}">
                     <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"/>
                     <div class="item-info">
                     <div class="item-name"><a href="{% url 'core:product' item.product.pk %}">{{ item.product.name }}</div>

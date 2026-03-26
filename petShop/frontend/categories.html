@@ -16,17 +16,17 @@
             <li class="product-item">
             {% if category.is_leaf_node %}
                 {# no children, go straight to products #}
-                <a href="{% url 'core:catalog' category.pk %}">
+                <a href="{% url 'catalog:catalog' category.pk %}">
                     <img src="{{ category.image.url }}" alt="{{ category.name }}" width="100">
                 </a>
                 <h3>{{ category.name }}</h3>
             {% else %}
                 {# has children, drill deeper #}
-                <a href="{% url 'core:category_detail' category.pk %}">
+                <a href="{% url 'categories:category_detail' category.pk %}">
                     <img src="{{ category.image.url }}" alt="{{ category.name }}" width="100">
                     <h3>{{ category.name }}</h3>
                 </a>
-                <form action="{% url 'core:catalog' category.pk %}" method="post">
+                <form action="{% url 'catalog:catalog' category.pk %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="add-to-cart-btn">В Каталог</button>
                 </form>
