@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from mptt.models import MPTTModel, TreeForeignKey
 
 def generate_track():
     from random import randint
@@ -45,15 +46,33 @@ class Purchase(models.Model):
     def total_price(self):
         return self.price * self.quantity
 
-class Category(models.Model):
+# class Category(models.Model):
+#     name = models.CharField(max_length=100)
+#     image = models.ImageField(upload_to="category_images/")
+    
+#     class Meta:
+#         verbose_name_plural = 'Categories'
+    
+#     def __str__(self):
+#         return self.name
+    
+#     def get_products(self):
+#         return Product.objects.filter(category=self)
+    
+class Category(MPTTModel):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to="category_images/")
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     
+    class MPTTMeta:
+        order_insertion_by = ['name']
+        
     class Meta:
         verbose_name_plural = 'Categories'
-    
+        
     def __str__(self):
         return self.name
     
     def get_products(self):
-        return Product.objects.filter(category=self)
+        categories = self.get_descendants(include_self=True)
+        return Product.objects.filter(category__in=categories)

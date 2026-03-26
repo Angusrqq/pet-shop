@@ -5,15 +5,34 @@
 {% block content %}
     <div class="container">
         <h2>Категории</h2>
-        <ul class="product-list">
-            {% for category in categories %}
-                <li class="product-item">
-                    <a href="{% url 'core:catalog' %}?category_id={{ category.pk }}">
-                        <img src="{{ category.image.url }}" alt="{{ category.name }}" width="100">
-                    </a>
-                    <h3>{{ category.name }}</h3>
-                </li>
+        {% if parent %}
+            {% for ancestor in parent.get_ancestors %}
+                <a href="{% url 'category_detail' ancestor.pk %}">{{ ancestor.name }}</a> /
             {% endfor %}
+            {{ parent.name }}
+        {% endif %}
+        <ul class="product-list">
+        {% for category in categories %}
+            <li class="product-item">
+            {% if category.is_leaf_node %}
+                {# no children, go straight to products #}
+                <a href="{% url 'core:catalog' category.pk %}">
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" width="100">
+                </a>
+                <h3>{{ category.name }}</h3>
+            {% else %}
+                {# has children, drill deeper #}
+                <a href="{% url 'core:category_detail' category.pk %}">
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" width="100">
+                    <h3>{{ category.name }}</h3>
+                </a>
+                <form action="{% url 'core:catalog' category.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="add-to-cart-btn">В Каталог</button>
+                </form>
+            {% endif %}
+            </li>
+        {% endfor %}
         </ul>
     </div>
 {% endblock %}

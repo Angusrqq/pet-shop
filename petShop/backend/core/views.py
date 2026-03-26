@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse, HttpRequest
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -13,12 +13,14 @@ def main(request):
 def about(request):
     return render(request, 'about.html')
 
-def catalog(request: HttpRequest):
-    category_id = request.GET.get('category_id', -1)
-    if not Category.objects.filter(pk=category_id).exists():
-        products = Product.objects.all()
+def catalog(request: HttpRequest, category_pk = None):
+    if category_pk:
+        if not Category.objects.filter(pk=category_pk).exists():
+            products = Product.objects.all()
+        else:
+            products = Category.objects.get(pk=category_pk).get_products()
     else:
-        products = Category.objects.get(pk=category_id).get_products()
+        products = Product.objects.all()
     return render(request, 'catalog.html', {'products': products})
 
 def product(request, pk):
@@ -72,9 +74,14 @@ def register(request: HttpRequest):
     context = {'form': form}
     return render(request, 'register.html', context)
 
-def categories(request):
-    categories = Category.objects.all()
-    return render(request, 'categories.html', {"categories": categories})
+def categories(request, pk = None):
+    if pk:
+        parent = get_object_or_404(Category, pk=pk)
+        categories = parent.get_children()
+    else:
+        parent = None
+        categories = Category.objects.root_nodes()
+    return render(request, 'categories.html', {"categories": categories, "parent": parent})
 
 def search(request: HttpRequest):
     if request.method == 'POST':

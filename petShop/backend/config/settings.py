@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
-    'cart.apps.CartConfig'
+    'cart.apps.CartConfig',
+    'mptt',
 ]
 
 MIDDLEWARE = [

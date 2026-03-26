@@ -353,7 +353,7 @@ nav a:hover, .svg-icon:hover {
     margin: 0;
 }
 
-/* auth */
+/* auth/reg */
 
 .auth, .reg{
     display: flex;
@@ -369,6 +369,87 @@ nav a:hover, .svg-icon:hover {
     align-items: center;
     justify-content: center;
     gap: 5px;
+}
+
+/* forms */
+
+.form input,
+.form textarea,
+.form select {
+    background: var(--main);
+    color: var(--main-contrast);
+    border: 1px solid #3a3a3a;
+    border-radius: 6px;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.85rem;
+    font-family: sans-serif;
+    outline: none;
+    width: 100%;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+    border-color: var(--accents);
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: #555;
+}
+
+/* remove number input arrows */
+.form input::-webkit-outer-spin-button,
+.form input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* labels */
+.form label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--darker-text);
+    margin-bottom: 0.3rem;
+}
+
+/* field grouping */
+.form .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+/* buttons */
+.form button,
+.form input[type=submit] {
+    background: var(--accents);
+    color: var(--secondary-contrast);
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+.form button:hover,
+.form input[type=submit]:hover {
+    opacity: 0.85;
+}
+
+/* secondary/ghost button */
+.form button.secondary {
+    background: none;
+    color: var(--darker-text);
+    border: 1px solid #3a3a3a;
+}
+
+.form button.secondary:hover {
+    border-color: var(--accents);
+    color: var(--accents);
+    opacity: 1;
 }
 
 /* catalog */
