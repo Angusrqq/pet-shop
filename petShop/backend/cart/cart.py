@@ -10,6 +10,7 @@ class Cart:
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
+        self._sync_products()
         self._sync_price()
 
     def add(self, product: Product, quantity=1, override_quantity=False):
@@ -41,6 +42,26 @@ class Cart:
             if self.cart[product_id]["price"] != new_price:
                 self.cart[product_id]["price"] = new_price
                 update = True
+        if update:
+            self.save()
+    
+    def _sync_products(self):
+        product_ids = list(self.cart.keys())
+        if not product_ids:
+            return
+        products = Product.objects.filter(id__in=product_ids).values("id", "name")
+        update = False
+        # if product was deleted in db but remains in session
+        product_ids_to_delete = []
+        
+        for product_id in self.cart.keys():
+            if not Product.objects.filter(id=product_id).exists():
+                product_ids_to_delete.append(product_id)
+                update = True
+        
+        for product_id in product_ids_to_delete:
+            del self.cart[product_id]
+        
         if update:
             self.save()
     
