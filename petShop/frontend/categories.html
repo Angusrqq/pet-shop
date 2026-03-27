@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Категории{% endblock %}
+{% block title %}Каталог{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h2>Категории</h2>
+        <h2>Каталог</h2>
         {% if parent %}
             {% for ancestor in parent.get_ancestors %}
-                <a href="{% url 'category_detail' ancestor.pk %}">{{ ancestor.name }}</a> /
+                <a href="{% url 'categories:category_detail' ancestor.pk %}">{{ ancestor.name }}</a> /
             {% endfor %}
             {{ parent.name }}
         {% endif %}

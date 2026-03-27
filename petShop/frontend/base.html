@@ -38,7 +38,7 @@
             </form>
             <nav>
                 <a href="/about">О магазине</a>
-                <a href="{%  url 'categories:category_list' %}">Категории</a>
+                <a href="{%  url 'categories:category_list' %}">Каталог</a>
                 <a href="/delivery">Доставка</a>
                 {% if not user.is_authenticated %}
                     <a href="{% url 'users:auth' %}" class="nav-with-icon">

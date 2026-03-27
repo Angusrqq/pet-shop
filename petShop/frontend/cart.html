@@ -20,7 +20,7 @@
                     <a href="{% url 'catalog:product' item.product.pk %}">
                     <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"/>
                     <div class="item-info">
-                    <div class="item-name"><a href="{% url 'core:product' item.product.pk %}">{{ item.product.name }}</div>
+                    <div class="item-name"><a href="{% url 'catalog:product' item.product.pk %}">{{ item.product.name }}</div>
                     </div>
                     </a>
             
