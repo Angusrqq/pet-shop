@@ -7,8 +7,11 @@ from django.db.models import Q
 # Create your views here.
 def search(request: HttpRequest):
     if request.method == 'POST':
-        searchbox = request.POST.get('searchbox')
-        products = Product.objects.filter(Q(name__icontains=searchbox) | Q(description__icontains=searchbox) | Q(category__name__icontains=searchbox) | Q(tags__icontains=searchbox))
+        keywords = request.POST.get('searchbox').split()
+        queryset = Product.objects.all()
+        for word in keywords:
+                queryset = queryset.filter(Q(name__icontains=word) | Q(description__icontains=word) | Q(category__name__icontains=word) | Q(tags__icontains=word))
+        products = queryset
         if products.count() == 0:
             messages.error(request, 'Ничего не найдено')
         return render(request, 'catalog.html', {'products': products})
