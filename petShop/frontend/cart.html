@@ -70,8 +70,11 @@
                     <span class="label">Всего</span>
                     <span class="value">{{ cart.get_total_cart_price }} ₽</span>
                 </div>
-            
-                <button class="checkout-btn">Оформить заказ</button>
+                
+                <form method="post" action="{% url 'orders:checkout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="checkout-btn">Оформить заказ</button>
+                </form>
             
                 <form class="clear-form" method="post" action="{% url 'cart:clear_cart' %}">
                     {% csrf_token %}
