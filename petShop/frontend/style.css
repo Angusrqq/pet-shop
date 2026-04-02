@@ -297,6 +297,62 @@ nav a:hover, .svg-icon:hover {
     line-height: 1;
 }
 
+/* searchbar */
+
+.search-form {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex: 1;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.search-form input {
+    background: var(--main);
+    color: var(--main-contrast);
+    border: 1px solid var(--borders);
+    border-radius: 10px;
+    padding: 0.45rem 2.5rem 0.45rem 1rem;
+    font-size: 0.85rem;
+    outline: none;
+    width: 100%;
+}
+
+.search-form input:focus {
+    border-color: var(--accents);
+}
+
+.search-form input::placeholder {
+    color: var(--darker-text);
+}
+
+.search-form button.search {
+    position: absolute;
+    right: 0.6rem;
+    background: none;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    color: var(--darker-text);
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.search-form button.search:hover {
+    color: var(--accents);
+}
+
+.search-form button.search svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
 /* footer */
 
 .site-footer {
