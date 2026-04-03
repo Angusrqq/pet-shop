@@ -1,28 +1,36 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Оформление заказа{% endblock %}
 
 {% block content %}
-    <div class="container checkout">
+    <div class="container">
         <h2>Оформление заказа</h2>
+    </div>
+    <div class="container checkout">
         <form method="POST" action="" class="form">
             {% csrf_token %}
             {% for field in form %}
-                {{ field }}
+                {% if field.name != 'address' and field.name != 'payment_method' and field.name != 'delivery_method' %}
+                    {{ field }}
+                {% endif %}
             {% endfor %}
 
             <div class="delivery-method">
-                <input type="radio" name="delivery-method" id="delivery" value="Доставка">
-                <label for="delivery">Доставка</label>
-                <input type="radio" name="delivery-method" id="pickup" value="Самовывоз">
-                <label for="pickup">Самовывоз</label>
+                {% for radio in form.delivery_method %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                {% endfor %}
+            </div>
+
+            <div class="address-field" style="display:none;">
+                {{ form.address }}
             </div>
 
             <div class="payment-method">
-                <input type="radio" name="payment-method" id="sbp" value="СБП">
-                <label for="sbp">СБП</label>
-                <input type="radio" name="payment-method" id="card" value="Картой на сайте">
-                <label for="card">Картой на сайте</label>
+                {% for radio in form.payment_method %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                {% endfor %}
             </div>
             <button type="submit" class="payment">Оплатить</button>
         </form>
@@ -35,11 +43,19 @@
                     <p class="item-price">{{ item.total_price }} ₽</p>
                 </li>
                 {% endfor %}
+                <div class="summary-item" id="delivery-cost-line" style="display:none;">
+                    <p class="item-name">Доставка</p>
+                    <p class="item-price">{{ delivery_cost }} ₽</p>
+                </div>
             </ul>
-            <div class="total-price">
+            <div class="total-price" data-delivery-cost = "{{ delivery_cost }}">
                 <p>Сумма заказа</p>
-                <p class="total">{{ cart.get_total_cart_price }}</p>
+                <p class="total" data-base="{{ cart.get_total_cart_price }}">{{ cart.get_total_cart_price }} ₽</p>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/checkout.js' %}"></script>
 {% endblock %}

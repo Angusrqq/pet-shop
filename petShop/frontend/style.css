@@ -675,6 +675,10 @@ nav a:hover, .svg-icon:hover {
 .qty-value::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
+.qty-value[type=number] {
+    -moz-appearance: textfield; /* firefox legacy */
+    appearance: textfield;      /* standard */
+}
 
 
 .unit-price { font-size: 1rem; color: var(--darker-text); }
@@ -770,18 +774,19 @@ nav a:hover, .svg-icon:hover {
 .promo-row button:hover { color: var(--accents); }
 
 .checkout-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
     background: var(--accents);
     color: var(--secondary-contrast);
-    border: none;
     border-radius: 6px;
     padding: 0.8rem;
     font-size: 0.95rem;
     font-weight: 600;
-    cursor: pointer;
     width: 100%;
 }
 
-.checkout-btn:hover { opacity: 0.85; }
+.checkout-btn:hover { color: var(--secondary-contrast); opacity: 0.85; }
 
 .clear-form button {
     background: none;
@@ -798,6 +803,161 @@ nav a:hover, .svg-icon:hover {
 
 .empty { color: var(--darker-text); font-size: 0.9rem; }
 .empty a { color: var(--accents); }
+
+/* checkout page */
+
+.checkout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 2rem 0;
+}
+
+/* ---- form side ---- */
+.form {
+    flex: 1;
+    display: flex;
+    width: 400px;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+/* section titles */
+.form h3 {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--darker-text);
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+/* radio groups */
+.delivery-method,
+.payment-method {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.delivery-method input[type="radio"],
+.payment-method input[type="radio"] {
+    display: none; /* hide native radio */
+}
+
+.delivery-method label,
+.payment-method label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--borders);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--darker-text);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.delivery-method input[type="radio"]:checked + label,
+.payment-method input[type="radio"]:checked + label {
+    border-color: var(--accents);
+    color: var(--secondary-contrast);
+    background: var(--accents);
+}
+
+.delivery-method label:hover,
+.payment-method label:hover {
+    border-color: var(--accents);
+    color: var(--main-contrast);
+}
+
+/* submit button */
+button.payment {
+    margin-top: 0.5rem;
+    background: var(--accents);
+    color: var(--secondary-contrast);
+    border: none;
+    border-radius: 6px;
+    padding: 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    letter-spacing: 0.05em;
+}
+
+button.payment:hover { opacity: 0.85; }
+
+/* ---- summary side ---- */
+.summary {
+    flex: 1;
+    position: sticky;
+    top: 1rem;
+    width: 300px;
+    flex-shrink: 0;
+    background: var(--header-bg);
+    border: 1px solid var(--borders);
+    border-radius: 8px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.summary h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--main-contrast);
+}
+
+.summary ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.summary-item .item-name {
+    font-size: 0.82rem;
+    color: var(--darker-text);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.summary-item .item-price {
+    font-size: 0.85rem;
+    color: var(--main-contrast);
+    flex-shrink: 0;
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--borders);
+    padding-top: 1rem;
+}
+
+.total-price p {
+    font-size: 0.85rem;
+    color: var(--darker-text);
+}
+
+.total-price .total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accents);
+}
 
 /* theme-switcher-button */
 

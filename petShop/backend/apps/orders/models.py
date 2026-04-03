@@ -3,6 +3,8 @@ from django.conf import settings
 from apps.catalog.models import Product
 # Create your models here.
 
+DELIVERY_COST = 500
+
 def generate_track():
     from random import randint
     unique_number = randint(1000000000, 9999999999)
@@ -14,7 +16,7 @@ def generate_track():
 
 class Order(models.Model):
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True)
-    session_key = models.CharField(max_length=40)
+    session_key = models.CharField(max_length=40, blank=True, null=True)
     client_name = models.CharField(max_length=100)
     client_last_name = models.CharField(blank=True, max_length=100)
     client_email = models.EmailField()

@@ -1,17 +1,22 @@
+from django.http import HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from apps.cart.cart import Cart
 from apps.orders.forms import OrderCreationForm
-from apps.orders.models import Order, Purchase
+from apps.orders.models import Order, Purchase, DELIVERY_COST
+from django.contrib import messages
 
-def checkout(request):
+def checkout(request: HttpRequest):
     cart = Cart(request)
+    form = OrderCreationForm()
     if request.method == 'POST':
         form = OrderCreationForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
-            order.payment_method = request.POST.get('payment-method')
-            order.delivery_method = request.POST.get('delivery-method')
+            if request.user.is_authenticated:
+                order.user_id = request.user
+            else:
+                order.session_key = request.session.session_key
             order.save()
             for item in cart:
                 Purchase.objects.create(
@@ -23,9 +28,9 @@ def checkout(request):
             cart.clear_cart()
             request.session['order_id'] = order.id
             return redirect(reverse('orders:success'))
-    else:
-        form = OrderCreationForm()
-    return render(request, 'checkout.html', {'cart': cart, 'form': form})
+        else:
+            messages.error(request, form.errors)
+    return render(request, 'checkout.html', {'cart': cart, 'form': form, 'delivery_cost': DELIVERY_COST})
     
 def success(request):
     order_id = request.session.get('order_id')
