@@ -14,7 +14,7 @@
 
         <div class="product-side">
             <p class="product-price">{{ product.price }} ₽</p>
-            <form action="{% url 'cart:add_to_cart' product.id %}" method="post">
+            <form action="{% url 'cart:add_to_cart' product.id %}?next={{ request.path }}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="add-to-cart-btn">В Корзину</button>
             </form>
