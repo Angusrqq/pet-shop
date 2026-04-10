@@ -9,6 +9,10 @@ from django.contrib import messages
 def checkout(request: HttpRequest):
     cart = Cart(request)
     form = OrderCreationForm()
+    if(request.user.is_authenticated):
+        form.fields['client_name'].initial = request.user.first_name
+        form.fields['client_last_name'].initial = request.user.last_name
+        form.fields['client_email'].initial = request.user.email
     if request.method == 'POST':
         form = OrderCreationForm(request.POST)
         if form.is_valid():
@@ -25,6 +29,9 @@ def checkout(request: HttpRequest):
                     price = item['price'],
                     quantity = item['quantity']
                 )
+                product = item['product']
+                product.stock -= item['quantity']
+                product.save()
             cart.clear_cart()
             request.session['order_id'] = order.id
             return redirect(reverse('orders:success'))
