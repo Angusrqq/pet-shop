@@ -615,6 +615,99 @@ nav a:hover, .svg-icon:hover {
     filter: brightness(0.85);
 }
 
+/* discounts */
+
+.product-image-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-image-top {
+    height: 1.5rem;
+}
+
+.discount-badge {
+    display: inline-block;
+    background: var(--accents);
+    color: var(--secondary-contrast);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.product-price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.original-price {
+    font-size: 0.8rem;
+    color: var(--darker-text);
+    text-decoration: line-through;
+}
+
+.discounted-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accents);
+}
+
+.price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--main-contrast);
+}
+
+.discounted-unit-price {
+    color: var(--accents);
+    font-size: 0.75rem;
+}
+
+.item-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+}
+
+.original-total {
+    text-decoration: line-through;
+    color: var(--darker-text);
+    font-size: 0.8rem;
+}
+
+.discounted-total {
+    font-weight: 700;
+    color: var(--accents);
+}
+
+.product-image-top {
+    height: 2rem;  /* reserves space for badge even when empty */
+}
+
+.discount-badge2 {
+    display: inline-block;
+    background: var(--accents);
+    color: var(--secondary-contrast);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+/* .original-price {
+    font-size: 1rem;
+    color: var(--darker-text);
+    text-decoration: line-through;
+}
+
+.discounted-price {
+    color: var(--accents);
+} */
+
 /* product_detailed */
 
 .product-page {

@@ -1,0 +1,27 @@
+<li class="product-item">
+    <div class="product-image-wrapper">
+        <a href="{% url 'catalog:product' product.pk %}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100">
+        </a>
+        {% if product.has_discount %}
+        <span class="discount-badge">-{{ product.get_top_discount_percent }}%</span>
+        {% endif %}
+    </div>
+
+    <h3>{{ product.name }}</h3>
+    <!-- <p class="product-description">{{ product.description }}</p> -->
+
+    <div class="product-price-block">
+        {% if product.has_discount %}
+        <p class="original-price">{{ product.price }} ₽</p>
+        <p class="discounted-price">{{ product.discounted_price }} ₽</p>
+        {% else %}
+        <p class="price">{{ product.price }} ₽</p>
+        {% endif %}
+    </div>
+
+    <form action="{% url 'cart:add_to_cart' product.id %}?next={{ request.path }}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="add-to-cart-btn">В Корзину</button>
+    </form>
+</li>

@@ -17,7 +17,8 @@ class Cart:
         product_id = str(product.id)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
-                                    'price': str(product.price)}
+                                    'price': str(product.price),
+                                    'discounted_price': str(product.discounted_price())}
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
@@ -34,9 +35,19 @@ class Cart:
         product_ids = list(self.cart.keys())
         if not product_ids:
             return
-        products = Product.objects.filter(id__in=product_ids).values("id", "price")
+        products = Product.objects.filter(id__in=product_ids)
         update = False
+        
+        # sync discounts
         for product in products:
+            product_id = str(product.id)
+            new_discounted_price = str(product.discounted_price())
+            if self.cart[product_id]["discounted_price"] != new_discounted_price:
+                self.cart[product_id]["discounted_price"] = new_discounted_price
+                update = True
+        
+        # sync prices
+        for product in products.values("id", "price"):
             product_id = str(product["id"])
             new_price = str(product["price"])
             if self.cart[product_id]["price"] != new_price:
@@ -49,7 +60,6 @@ class Cart:
         product_ids = list(self.cart.keys())
         if not product_ids:
             return
-        products = Product.objects.filter(id__in=product_ids).values("id", "name")
         update = False
         # if product was deleted in db but remains in session
         product_ids_to_delete = []
@@ -76,14 +86,16 @@ class Cart:
             cart[str(product.id)]['product'] = product
         for item in cart.values():
             item['price'] = Decimal(item['price'])
+            item['discounted_price'] = Decimal(item['discounted_price'])
             item['total_price'] = Decimal(item['price']) * item['quantity']
+            item['discounted_total_price'] = Decimal(item['discounted_price']) * item['quantity']
             yield item
             
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
     
     def get_total_cart_price(self):
-        return sum(Decimal(item['price']) * item['quantity'] for item
+        return sum(Decimal(item['discounted_price']) * item['quantity'] for item
                     in self.cart.values())
 
     def get_products(self):

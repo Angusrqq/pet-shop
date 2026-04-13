@@ -12,7 +12,7 @@ def cart(request):
 def add_to_cart(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    next_url = request.POST.get('next') or request.GET.get('next') or '/'
+    next_url = request.POST.get('next') or request.GET.get('next') or 'cart:cart'
 
     if cart.cart.get(str(product_id)) and product.stock < cart.cart[str(product_id)]['quantity'] + 1:
         messages.error(request, 'Недостаточно товара в наличии')

@@ -13,6 +13,7 @@ def checkout(request: HttpRequest):
         form.fields['client_name'].initial = request.user.first_name
         form.fields['client_last_name'].initial = request.user.last_name
         form.fields['client_email'].initial = request.user.email
+        form.fields['address'].initial = request.user.address
     if request.method == 'POST':
         form = OrderCreationForm(request.POST)
         if form.is_valid():
@@ -26,7 +27,7 @@ def checkout(request: HttpRequest):
                 Purchase.objects.create(
                     order = order,
                     product = item['product'],
-                    price = item['price'],
+                    price = item['discounted_price'],
                     quantity = item['quantity']
                 )
                 product = item['product']
