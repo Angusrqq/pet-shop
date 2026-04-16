@@ -48,3 +48,8 @@ def register(request: HttpRequest):
             messages.error(request, form.errors)
     context = {'form': form}
     return render(request, 'register.html', context)
+
+def account(request: HttpRequest):
+    if not request.user.is_authenticated:
+        return redirect('users:auth')
+    return render(request, 'account.html')

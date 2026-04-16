@@ -7,18 +7,7 @@
         <h3>Главная страница пока в разработке</h3>
         <ul class="product-list">
             {% for product in products %}
-            <li class="product-item">
-                <a href="{% url 'catalog:product' product.pk %}">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100">
-                </a>
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-                <p>{{ product.price }} ₽</p>
-                <form action="{% url 'cart:add_to_cart' product.id %}?next={{ request.path }}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="add-to-cart-btn">В Корзину</button>
-                </form>
-            </li>
+                {% include 'modules/compactProductView.html' %}
             {% endfor %}
         </ul>
     </div>

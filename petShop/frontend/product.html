@@ -5,11 +5,9 @@
     <div class="product-top">
 
         <div class="product-image">
-            <div class="product-image-top">
-                {% if product.has_discount %}
-                <span class="discount-badge2">-{{ product.get_top_discount_percent }}%</span>
-                {% endif %}
-            </div>
+            {% if product.has_discount %}
+            <span class="discount-badge">-{{ product.get_top_discount_percent }}%</span>
+            {% endif %}
             <img src="{{ product.image.url }}" alt="{{ product.name }}">
         </div>
 

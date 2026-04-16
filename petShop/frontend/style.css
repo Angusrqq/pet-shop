@@ -214,6 +214,7 @@ header{
     padding: 15px 0;
     background-color: var(--header-bg);
     box-shadow: 0 0 5px #8181815d;
+    z-index: 100;
 }
 
 header .container{
@@ -618,16 +619,13 @@ nav a:hover, .svg-icon:hover {
 /* discounts */
 
 .product-image-wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-.product-image-top {
-    height: 1.5rem;
+    position: relative;
 }
 
 .discount-badge {
-    display: inline-block;
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
     background: var(--accents);
     color: var(--secondary-contrast);
     font-size: 0.72rem;
@@ -684,18 +682,21 @@ nav a:hover, .svg-icon:hover {
     color: var(--accents);
 }
 
-.product-image-top {
-    height: 2rem;  /* reserves space for badge even when empty */
+.product-image .discount-badge {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    z-index: 1;
 }
 
-.discount-badge2 {
-    display: inline-block;
-    background: var(--accents);
-    color: var(--secondary-contrast);
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
+.original-price {
+    font-size: 1rem;
+    color: var(--darker-text);
+    text-decoration: line-through;
+}
+
+.discounted-price {
+    color: var(--accents);
 }
 
 /* .original-price {
@@ -725,6 +726,7 @@ nav a:hover, .svg-icon:hover {
 
 .product-image {
     width: 400px;
+    position: relative;
     flex-shrink: 0;
     border: 1px solid var(--borders);
     border-radius: 10px;
