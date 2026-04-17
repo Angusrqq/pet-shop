@@ -1,14 +1,42 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Главная{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h3>Главная страница пока в разработке</h3>
-        <ul class="product-list">
+        <h1>Главная пока разрабатывается</h1>
+
+        <h3>Акции</h3>
+        <ul class="product-list" id="discounted_products">
+            {% for product in discounted_products %}
+                {% include 'modules/compactProductView.html' %}
+            {% endfor %}
+        </ul>
+
+        <h3>Хиты продаж</h3>
+        <div class="slider-container">
+            <button class="slider-btn prev-btn" aria-label="Предыдущие">❮</button>
+            <div class="slider-wrapper">
+                <ul class="product-list slider-track" id="top_products">
+                    {% for product in top_products %}
+                        {% include 'modules/compactProductView.html' %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <button class="slider-btn next-btn" aria-label="Следующие">❯</button>
+        </div>
+
+        <h3>Новинки</h3>
+        <ul class="product-list" id="new_products">
             {% for product in products %}
                 {% include 'modules/compactProductView.html' %}
             {% endfor %}
         </ul>
+
+
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/main.js' %}"></script>
 {% endblock %}

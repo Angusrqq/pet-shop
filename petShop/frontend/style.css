@@ -1270,3 +1270,60 @@ button.payment:hover { opacity: 0.85; }
 .eye.opening .lid {
     animation: open 0.3s ease forwards;
 }
+
+/* main */
+
+.slider-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.slider-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease-in-out;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.slider-track > * {
+    flex: 0 0 calc(20% - 16px); /* 5 товаров на странице */
+    min-width: 0;
+}
+
+.slider-btn {
+    background: var(--footer);
+    color: var(--secondary-contrast);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.slider-btn:hover {
+    background: var(--accents);
+    transform: scale(1.1);
+}
+
+.slider-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
