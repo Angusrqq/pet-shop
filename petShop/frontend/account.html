@@ -1,16 +1,130 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Профиль{% endblock %}
-
 {% block content %}
-    <div class="container account">
-        <h2>Профиль</h2>
-        <a href="{% url 'users:logout' %}">
-            <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="512" height="512" fill="none" viewBox="0 0 24 24">
-                <path fill-rule="evenodd" d="M8.25 5.25 9 4.5h9l.75.75v13.5l-.75.75H9l-.75-.75V16.5h1.5V18h7.5V6h-7.5v1.5h-1.5z" clip-rule="evenodd"/>
-                <path fill-rule="evenodd" d="M7.06 12.75h7.19v-1.5H7.06l1.72-1.72-1.06-1.06L4.19 12l3.53 3.53 1.06-1.06z" clip-rule="evenodd">
-            </svg>
-            <span>Выйти</span>
-        </a>
+<div class="container account">
+
+    <div class="account-header">
+
+        <!-- avatar: clickable to change -->
+        <form method="post" enctype="multipart/form-data" id="avatar-form">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="avatar">
+            <input type="file" name="avatar" id="avatar-input" accept="image/*" style="display:none"
+                   onchange="this.form.submit()">
+            <div class="account-avatar" onclick="document.getElementById('avatar-input').click()">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="{{ user.username }}">
+                {% else %}
+                    <div class="avatar-placeholder">{{ user.username|first|upper }}</div>
+                {% endif %}
+                <div class="avatar-overlay">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                </div>
+            </div>
+        </form>
+
+        <div class="account-header-info">
+
+            <!-- username -->
+            <div class="editable-field" id="username-field">
+                <span class="editable-value">{{ user.username }}</span>
+                <button class="edit-btn" onclick="toggleEdit('username-field')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                </button>
+                <form method="post" class="edit-form" style="display:none">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="username">
+                    <input type="text" name="username" value="{{ user.username }}">
+                    <button type="submit" class="save-btn">✓</button>
+                    <button type="button" class="cancel-btn" onclick="toggleEdit('username-field')">✕</button>
+                </form>
+            </div>
+
+            <!-- email -->
+            <div class="editable-field" id="email-field">
+                <span class="editable-value">{{ user.email }}</span>
+                <button class="edit-btn" onclick="toggleEdit('email-field')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                </button>
+                <form method="post" class="edit-form" style="display:none">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="email">
+                    <input type="email" name="email" value="{{ user.email }}">
+                    <button type="submit" class="save-btn">✓</button>
+                    <button type="button" class="cancel-btn" onclick="toggleEdit('email-field')">✕</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="account-header-actions">
+            <a href="{% url 'core:main' %}" class="btn-secondary">Мои заказы</a>
+            <a href="{% url 'users:logout' %}" class="btn-logout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M8.25 5.25 9 4.5h9l.75.75v13.5l-.75.75H9l-.75-.75V16.5h1.5V18h7.5V6h-7.5v1.5h-1.5z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M7.06 12.75h7.19v-1.5H7.06l1.72-1.72-1.06-1.06L4.19 12l3.53 3.53 1.06-1.06z" clip-rule="evenodd"/>
+                </svg>
+                Выйти
+            </a>
+        </div>
     </div>
+
+    <!-- password + extra fields form -->
+    <form class="form account-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="details">
+
+        <!-- <div class="form-section">
+            <h3>Сменить пароль</h3>
+            <div class="field">
+                <label>Новый пароль</label>
+                {{ password_form.new_password1 }}
+            </div>
+            <div class="field">
+                <label>Повторите пароль</label>
+                {{ password_form.new_password2 }}
+            </div>
+        </div> -->
+
+        {% if extra_form %}
+        <div class="form-section">
+            <h3>Дополнительная информация</h3>
+            {% for field in extra_form %}
+            <div class="field">
+                <label>{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function toggleEdit(id) {
+    const wrapper = document.getElementById(id);
+    const value = wrapper.querySelector('.editable-value');
+    const editBtn = wrapper.querySelector('.edit-btn');
+    const form = wrapper.querySelector('.edit-form');
+    const isHidden = form.style.display === 'none';
+    value.style.display = isHidden ? 'none' : 'inline';
+    editBtn.style.display = isHidden ? 'none' : 'inline-flex';
+    form.style.display = isHidden ? 'flex' : 'none';
+}
+</script>
 {% endblock %}

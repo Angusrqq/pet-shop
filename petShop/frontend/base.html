@@ -56,7 +56,7 @@
                 {% else %}
                     <a href="{% url 'users:account' %}" class="nav-with-icon">
                         {% if request.user.avatar %}
-                            <img src="{{ request.user.avatar }}" alt="Профиль">
+                            <img class="avatar" src="{{ request.user.avatar.url }}" alt="Профиль">
                         {% else %}
                             <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xml:space="preserve" width="512" height="512">
                                 <circle cx="256" cy="128" r="128"/>

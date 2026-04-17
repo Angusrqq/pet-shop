@@ -275,6 +275,20 @@ nav a:hover, .svg-icon:hover {
     fill: currentColor;
 }
 
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--borders);
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .cart-icon-wrapper {
     position: relative;
     display: inline-flex;
@@ -1182,6 +1196,229 @@ button.payment:hover { opacity: 0.85; }
     font-weight: 700;
     color: var(--accents);
 }
+
+/* Accounts */
+
+.account-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--borders);
+    margin-bottom: 2rem;
+}
+
+.account-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--borders);
+}
+
+.account-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--accents);
+    color: var(--secondary-contrast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.account-header-info {
+    flex: 1;
+}
+
+.account-header-info h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.account-header-info p {
+    font-size: 0.85rem;
+    color: var(--darker-text);
+}
+
+.account-header-actions {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.btn-secondary {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--borders);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--darker-text);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accents);
+    color: var(--main-contrast);
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--borders);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--darker-text);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-logout svg {
+    fill: currentColor;
+}
+
+.btn-logout:hover {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+
+.account-form {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-section {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.form-section h3 {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--darker-text);
+    margin-bottom: 0.2rem;
+    border-bottom: 1px solid var(--borders);
+    padding-bottom: 0.5rem;
+}
+
+.account-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--borders);
+    cursor: pointer;
+    position: relative;
+}
+
+.account-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--accents);
+    color: var(--secondary-contrast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.account-avatar:hover .avatar-overlay {
+    opacity: 1;
+}
+
+.editable-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2rem;
+}
+
+.editable-value {
+    font-size: 0.95rem;
+    color: var(--main-contrast);
+}
+
+.edit-btn {
+    background: none;
+    border: none;
+    color: var(--darker-text);
+    cursor: pointer;
+    padding: 2px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.15s;
+}
+
+.edit-btn:hover { color: var(--accents); }
+
+.edit-form {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.edit-form input {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    width: auto;
+}
+
+.save-btn, .cancel-btn {
+    background: none;
+    border: 1px solid var(--borders);
+    color: var(--darker-text);
+    border-radius: 4px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.save-btn:hover { color: var(--accents); border-color: var(--accents); }
+.cancel-btn:hover { color: #ff6b6b; border-color: #ff6b6b; }
 
 /* theme-switcher-button */
 
