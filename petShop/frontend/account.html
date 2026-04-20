@@ -68,7 +68,8 @@
         </div>
 
         <div class="account-header-actions">
-            <a href="{% url 'core:main' %}" class="btn-secondary">Мои заказы</a>
+            <a href="{% url 'users:change_password' %}" class="btn-secondary">Сменить пароль</a>
+            <a href="{% url 'users:orders' %}" class="btn-secondary">Мои заказы</a>
             <a href="{% url 'users:logout' %}" class="btn-logout">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24">
                     <path fill-rule="evenodd" d="M8.25 5.25 9 4.5h9l.75.75v13.5l-.75.75H9l-.75-.75V16.5h1.5V18h7.5V6h-7.5v1.5h-1.5z" clip-rule="evenodd"/>

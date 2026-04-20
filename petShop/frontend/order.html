@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Заказ #{{ order.track_number }}{% endblock %}
+{% block content %}
+<div class="container order-page">
+
+    <a href="{% url 'users:orders' %}" class="back-link">← Назад к заказам</a>
+
+    <div class="order-page-header">
+        <div>
+            <h2>Заказ #{{ order.track_number }}</h2>
+            <span class="order-date">{{ order.creation_date|date:"d.m.Y H:i" }}</span>
+        </div>
+        <div class="order-page-total">{{ order.get_total_price }} ₽</div>
+    </div>
+
+    <div class="order-page-layout">
+
+        <div class="order-items">
+            <h3>Товары</h3>
+            {% for purchase in purchases %}
+            <div class="order-item">
+                <img src="{{ purchase.product.image.url }}" alt="{{ purchase.product.name }}">
+                <div class="order-item-info">
+                    <a href="{% url 'catalog:product' purchase.product.pk %}" class="order-item-name">
+                        {{ purchase.product.name }}
+                    </a>
+                    <span class="order-item-qty">{{ purchase.quantity }} шт.</span>
+                </div>
+                <div class="order-item-price">{{ purchase.total_price }} ₽</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="order-sidebar">
+            <div class="order-sidebar-section">
+                <h3>Доставка</h3>
+                <p>{{ order.delivery_method }}</p>
+                {% if order.address %}
+                <p class="order-address">{{ order.address }}</p>
+                {% endif %}
+            </div>
+            <div class="order-sidebar-section">
+                <h3>Оплата</h3>
+                <p>{{ order.payment_method }}</p>
+            </div>
+            <div class="order-sidebar-section">
+                <h3>Контакты</h3>
+                <p>{{ order.client_name }} {{ order.client_last_name }}</p>
+                <p>{{ order.client_email }}</p>
+                <p>{{ order.client_phone }}</p>
+            </div>
+            <div class="order-sidebar-total">
+                <span>Итого</span>
+                <span class="order-page-total">{{ order.get_total_price }} ₽</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

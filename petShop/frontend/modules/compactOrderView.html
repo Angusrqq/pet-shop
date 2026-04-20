@@ -1,0 +1,26 @@
+<li class="order-card">
+    <a href="{% url 'users:order' order.pk %}" class="order-card-link">
+
+        <div class="order-preview-images">
+            {% for purchase in order.purchase_set.all|slice:":3" %}
+                <img src="{{ purchase.product.image.url }}" alt="{{ purchase.product.name }}">
+            {% endfor %}
+        </div>
+
+        <div class="order-info">
+            <div class="order-meta">
+                <span class="order-date">{{ order.creation_date|date:"d.m.Y" }}</span>
+                <span class="order-track"># {{ order.track_number }}</span>
+            </div>
+            <div class="order-details">
+                <span class="order-items-count">{{ order.purchase_set.count }} товар(а)</span>
+                <span class="order-delivery">{{ order.delivery_method }}</span>
+            </div>
+        </div>
+
+        <div class="order-total">
+            {{ order.get_total_price }} ₽
+        </div>
+
+    </a>
+</li>

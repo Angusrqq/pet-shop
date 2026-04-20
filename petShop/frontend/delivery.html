@@ -1,30 +1,34 @@
 {% extends "base.html" %}
-
 {% block title %}Доставка{% endblock %}
-
 {% block content %}
-    <div class="container">
-        <h1>Доставка</h1>
-        <ul class="delivery-cards">
-            <li>
-                <div class="delivery-card">
-                    <div class="delivery-card__title">Доставка 500 руб.</div>
-                    <div class="delivery-card__text">По МО в пределах желтой зоны</div>
-                </div>
-            </li>
-            <li>
-                <div class="delivery-card">
-                    <div class="delivery-card__title">За пределами жёлтой зоны</div>
-                    <div class="delivery-card__text">стоимость доставки по согласованию с оператором.</div>
-                </div>
-            </li>
-        </ul>
-        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af2f7cb760575ac20e1e8800da48f649a08dd86cbd87835024509e8e4d9f0d40f&amp;width=1125&amp;height=338&amp;lang=ru_RU&amp;scroll=true"></script>
-        <div class="page-section">
-        <div class="page-section-title">Самовывоз</div>
-        <ul class="ul-list">
+<div class="container delivery">
+
+    <h1>Доставка</h1>
+
+    <ul class="delivery-cards">
+        <li>
+            <div class="delivery-card">
+                <div class="delivery-card__title">Доставка 500 руб.</div>
+                <div class="delivery-card__text">По МО в пределах желтой зоны</div>
+            </div>
+        </li>
+        <li>
+            <div class="delivery-card">
+                <div class="delivery-card__title">За пределами жёлтой зоны</div>
+                <div class="delivery-card__text">Стоимость доставки по согласованию с оператором.</div>
+            </div>
+        </li>
+    </ul>
+
+    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af2f7cb760575ac20e1e8800da48f649a08dd86cbd87835024509e8e4d9f0d40f&amp;width=1125&amp;height=338&amp;lang=ru_RU&amp;scroll=true"></script>
+
+    <div class="page-section">
+        <h2 class="page-section-title">Самовывоз</h2>
+        <ul class="pickup-list">
             <li>Самовывоз бесплатен. После оформления заказа на сайте Интернет-магазина наш оператор свяжется с Вами и обсудит удобное для Вас время и место выдачи.</li>
-            <li>Для заказа Вы можете воспользоваться Интернет - магазином <a href="/">«Зоомагазин»</a> или сделать заказ по телефону оператору службы доставки.</li>
+            <li>Для заказа Вы можете воспользоваться Интернет-магазином <a href="/">«Зоомагазин»</a> или сделать заказ по телефону оператору службы доставки.</li>
         </ul>
     </div>
+
+</div>
 {% endblock %}

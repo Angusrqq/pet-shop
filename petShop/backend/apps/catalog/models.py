@@ -52,3 +52,13 @@ class Discount(models.Model):
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def get_all_discounted_products() -> list[Product]:
+        discounts = Discount.objects.filter(is_active=True)
+        products = []
+        for discount in discounts:
+            if discount.product:
+                products.append(discount.product)
+            if discount.category:
+                products.extend(discount.category.get_products())
+        return products

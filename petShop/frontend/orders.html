@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Заказы{% endblock %}
+{% block content %}
+<div class="container orders">
+    <h2>Ваши заказы</h2>
+
+    {% if orders %}
+    <ul class="order-list">
+        {% for order in orders %}
+            {% include 'modules/compactOrderView.html' %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">У вас пока нет заказов. <a href="{% url 'catalog:catalog' %}">Перейти в каталог</a></p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -5,7 +5,9 @@ from apps.cart.cart import Cart
 from apps.orders.forms import OrderCreationForm
 from apps.orders.models import Order, Purchase, DELIVERY_COST
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='users:auth')
 def checkout(request: HttpRequest):
     cart = Cart(request)
     form = OrderCreationForm()

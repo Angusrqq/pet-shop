@@ -1,10 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django import forms
-from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.contrib import messages
+
+
+from django.http import Http404
+from ..orders.models import Order, Purchase
 from .forms import CustomAuthForm, CustomUserCreationForm
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -20,6 +24,8 @@ def translate_password_errors(request, form):
             messages.error(request, "Пароль должен содержать минимум одну букву")
         if 'match' in error.__str__():
             messages.error(request, "Пароли не совпадают")
+        if 'old password was entered incorrectly' in error.__str__():
+            messages.error(request, "Неправильно введен текущий пароль")
 
 def auth(request: HttpRequest):
     if request.user.is_authenticated:
@@ -130,3 +136,33 @@ def account(request):
         # 'password_form': password_form,
         'extra_form': extra_form,
     })
+
+def change_password(request):
+    if not request.user.is_authenticated:
+        return redirect('users:auth')
+    form = PasswordChangeForm(request.user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Пароль успешно изменён')
+            return redirect('users:account')
+        else:
+            translate_password_errors(request, form)
+    return render(request, 'change_password.html', {'form': form})
+
+def orders(request):
+    if not request.user.is_authenticated:
+        return redirect('users:auth')
+    user_orders = Order.objects.filter(user_id=request.user).prefetch_related('purchase_set__product').order_by('-creation_date')
+    return render(request, 'orders.html', {'orders': user_orders})
+
+def order(request, order_id):
+    if not request.user.is_authenticated:
+        return redirect('users:auth')
+    order = get_object_or_404(Order, id=order_id)
+    if order.user_id != request.user:
+        raise Http404  # hides that the order exists at all
+    purchases = Purchase.objects.filter(order=order).select_related('product')
+    return render(request, 'order.html', {'order': order, 'purchases': purchases})

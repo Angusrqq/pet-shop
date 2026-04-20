@@ -5,12 +5,17 @@ from apps.catalog.models import Product
 
 DELIVERY_COST = 500
 
+# def generate_track():
+#     from uuid import uuid4
+#     unique_id = str(uuid4().int)
+#     while Order.objects.filter(track_number=unique_id).exists():
+#         unique_id = str(uuid4().int)
+#     return unique_id
+
 def generate_track():
-    from uuid import uuid4
-    unique_id = str(uuid4())
-    while Order.objects.filter(track_number=unique_id).exists():
-        unique_id = str(uuid4())
-    return unique_id
+    from random import randint
+    return str(randint(1000000000, 9999999999))
+
 # Create your models here.
 
 class Order(models.Model):
@@ -25,6 +30,16 @@ class Order(models.Model):
     delivery_method = models.CharField(max_length=100)
     address = models.TextField(blank=True)
     track_number = models.CharField(blank=True, unique=True, null=True, default=generate_track)
+
+    def get_total_price(self):
+        total = 0
+        items = Purchase.objects.filter(order=self)
+        for item in items:
+            total += item.total_price()
+        if self.delivery_method == 'delivery':
+            total += DELIVERY_COST
+        return total
+
 
 class Purchase(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
