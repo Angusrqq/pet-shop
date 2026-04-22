@@ -1,8 +1,13 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.http import require_POST
 from .cart import Cart
 from apps.catalog.models import Product
 from django.contrib import messages
+from django.contrib.messages import get_messages
+
+def get_messages_list(request):
+    return [{'message': str(m), 'tags': m.tags} for m in get_messages(request)]
 
 def cart(request):
     cart = Cart(request)
@@ -22,7 +27,14 @@ def add_to_cart(request, product_id):
         messages.success(request, 'Товар добавлен в корзину!')
 
     cart.add(product, quantity=1)
-    return redirect(next_url)
+    
+    if(next_url == 'cart:cart'):
+        return redirect('cart:cart')
+    
+    return JsonResponse({
+        'cart_count': len(cart),
+        'messages': get_messages_list(request)
+    })
 
 @require_POST
 def remove_from_cart(request, product_id):

@@ -10,6 +10,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function showMessages(messages) {
+    let container = document.querySelector('.alert-messages');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'alert-messages';
+        document.body.appendChild(container);
+    }
+
+    messages.forEach((m, i) => {
+        const div = document.createElement('div');
+        div.className = `alert ${m.tags}`;
+        div.innerHTML = `
+            <span class="alert-icon"></span>
+            <span class="alert-text">${m.message}</span>
+            <button class="alert-close" onclick="this.parentElement.classList.add('dismissing'); setTimeout(() => this.parentElement.remove(), 400)">&#x2715;</button>
+        `;
+        container.appendChild(div);
+
+        setTimeout(() => {
+            if (!div.isConnected) return;
+            div.classList.add('dismissing');
+            setTimeout(() => div.remove(), 400);
+        }, 5000 + i * 80);
+    });
+}
+
+document.addEventListener('submit', function(e) {
+    const form = e.target;
+    if (!form.classList.contains('cart-form')) return;
+    if (document.querySelector('.cart-wrapper')) return; // let cart page reload normally
+
+    e.preventDefault();
+
+    fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+    })
+    .then(res => res.json())
+    .then(data => {
+        let badge = document.querySelector('.cart-badge');
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'cart-badge';
+            document.querySelector('.cart-icon-wrapper').appendChild(badge);
+        }
+        badge.textContent = data.cart_count;
+        badge.style.display = data.cart_count > 0 ? 'flex' : 'none';
+
+        if (data.messages) showMessages(data.messages);
+    });
+});
+
 // Eyes stuff
 const T = {
     light: { br: 13, me: 11 },

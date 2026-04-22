@@ -5,16 +5,13 @@ from apps.catalog.models import Product
 
 DELIVERY_COST = 500
 
-# def generate_track():
-#     from uuid import uuid4
-#     unique_id = str(uuid4().int)
-#     while Order.objects.filter(track_number=unique_id).exists():
-#         unique_id = str(uuid4().int)
-#     return unique_id
-
 def generate_track():
-    from random import randint
-    return str(randint(1000000000, 9999999999))
+    from uuid import uuid4
+    while True:
+        unique_id = uuid4().int % 1_000_000_000
+        unique_id = f"{unique_id:09d}"
+        if not Order.objects.filter(track_number=unique_id).exists():
+            return unique_id
 
 # Create your models here.
 
