@@ -20,7 +20,7 @@
             {% else %}
             <p class="product-price">{{ product.price }} ₽</p>
             {% endif %}
-            <form action="{% url 'cart:add_to_cart' product.id %}?next={{ request.path }}" method="post">
+            <form class="cart-form" action="{% url 'cart:add_to_cart' product.id %}?next={{ request.path }}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="add-to-cart-btn">В Корзину</button>
             </form>
