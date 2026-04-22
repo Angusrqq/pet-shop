@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Акции{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Акции</h1>
+        <ul class="product-list" id="discounted_products">
+            {% for product in discounted_products %}
+                {% include 'modules/compactProductView.html' %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

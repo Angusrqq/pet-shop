@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container catalog">
-    <h2>Каталог</h2>
+    <h1>Каталог</h1>
 
     {% if parent %}
     <div class="breadcrumb">
@@ -16,10 +16,8 @@
     </div>
     {% endif %}
 
-    <!-- category/product grid -->
     <ul class="category-list">
         {% for category in categories %}
-        <!-- category card -->
         <li class="product-item category-item">
             <a href="{% url 'catalog:catalog' category.pk %}">
                 <img src="{{ category.image.url }}" alt="{{ category.name }}">

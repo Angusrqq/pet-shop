@@ -3,8 +3,8 @@
 {% block title %}Каталог{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2>Каталог</h2>
+    <div class="container categories">
+        <h1>Каталог</h1>
         {% if parent %}
             {% for ancestor in parent.get_ancestors %}
                 <a href="{% url 'categories:category_detail' ancestor.pk %}">{{ ancestor.name }}</a> /

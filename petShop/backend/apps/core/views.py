@@ -22,6 +22,15 @@ def about(request):
 def delivery(request):
     return render(request, 'delivery.html')
 
+def sales(request):
+    discounted_products = Discount.get_all_discounted_products()
+    discounted_products = set(discounted_products)
+    
+    context = {
+        'discounted_products': discounted_products,
+    }
+    return render(request, 'sales.html', context)
+
 def error_400(request, exception=None):
     return render(request, 'error.html', {'code': 400, 'message': 'Неверный запрос'}, status=400)
 

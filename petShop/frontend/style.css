@@ -11,6 +11,7 @@
     --borders: #d3d3d3;
     --footer: #a86739;
     --footer-text: #6a3d30;
+    --footer-line: #ffa71a7b;
 }
 
 [data-theme='dark'] {
@@ -24,6 +25,7 @@
     --borders: #3a3a3a;
     --footer: #818f32;
     --footer-text: #d4d4d4;
+    --footer-line: #e5ff0084;
 }
 
 :root{
@@ -48,6 +50,14 @@ body{
     font-weight: 900;
     background-color: var(--main);
     color: var(--main-contrast);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content{
+    margin-bottom: 100px;
+    margin-top: 30px;
 }
 
 .container{
@@ -366,58 +376,125 @@ nav a:hover, .svg-icon:hover {
 /* footer */
 
 .site-footer {
-    margin-top: 80px;
-    width: 100%;
-    background-color: var(--footer);
-    padding: 40px 20px;
-    font-size: 14px;
+    background: var(--footer);
+    color: var(--footer-text);
+    margin-top: auto;
+    padding: 2.5rem 0 1.5rem;
 }
 
 .footer-container {
-    max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    padding: 0 2rem;
 }
 
-.footer-links {
+.footer-top {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    gap: 3rem;
+    padding-bottom: 2rem;
     flex-wrap: wrap;
-    gap: 20px;
+    max-width: 90%;
+}
+
+.footer-links-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 140px;
+}
+
+.footer-contacts-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-left: auto;
+}
+
+.footer-title {
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--main-contrast);
+    margin-bottom: 0.2rem;
+}
+
+.footer-menu {
     list-style: none;
-    margin-bottom: 25px;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }
 
-.footer-links li {
-    position: relative;
-}
-
-.footer-links li:not(:last-child)::after {
-    content: "|";
-    position: absolute;
-    right: -12px;
-    color: var(--footer-text);
-    transition: var(--transition);
-}
-
-.footer-links a {
+.footer-menu a {
+    font-size: 0.85rem;
     color: var(--main-contrast);
     text-decoration: none;
-    /* transition: opacity 0.2s ease; */
+    opacity: 0.8;
 }
 
-.footer-links a:hover {
-    opacity: 0.7;
-    text-decoration: underline;
+.footer-menu a:hover {
+    opacity: 1;
 }
 
-.footer-copyright p {
+.footer-phone {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--main-contrast);
+}
+
+.footer-social {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.2rem;
+}
+
+.social-icon {
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+    display: flex;
+}
+
+.social-icon:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.footer-payment {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-top: 1px solid var(--footer-line);
+    border-bottom: 1px solid var(--footer-line);
+    /* filter: brightness(0.8); */
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.footer-copyright {
+    font-size: 0.78rem;
+    opacity: 0.6;
+}
+
+.footer-policy a {
+    font-size: 0.78rem;
     color: var(--footer-text);
-    font-size: 13px;
-    margin: 0;
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity 0.2s;
 }
+
+.footer-policy a:hover {
+    opacity: 1;
+}
+
 
 /* auth/reg */
 
@@ -519,9 +596,6 @@ nav a:hover, .svg-icon:hover {
 }
 
 /* catalog */
-/* .catalog{
-    padding-bottom: 150px;
-} */
 
 .breadcrumb {
     color: var(--darker-text);
@@ -810,10 +884,6 @@ nav a:hover, .svg-icon:hover {
 }
 
 /* cart */
-
-/* .cart{
-    padding-bottom: 320px;
-} */ 
 
 .back-link {
     font-size: 0.82rem;
@@ -1429,6 +1499,7 @@ button.payment:hover { opacity: 0.85; }
 /* user orders */
 
 /* orders list */
+
 .order-list {
     list-style: none;
     display: flex;
@@ -1818,8 +1889,8 @@ button.payment:hover { opacity: 0.85; }
 }
 
 /* about */
+
 .about-hero {
-    padding: 3rem 0 2rem;
     border-bottom: 1px solid var(--borders);
     margin-bottom: 2rem;
 }
@@ -1835,7 +1906,6 @@ button.payment:hover { opacity: 0.85; }
     font-size: 1rem;
     color: var(--darker-text);
     line-height: 1.7;
-    max-width: 700px;
 }
 
 .about-grid {
@@ -1908,7 +1978,7 @@ button.payment:hover { opacity: 0.85; }
 }
 
 /* delivery */
-/* delivery text */
+
 .delivery h1 {
     font-size: 1.8rem;
     font-weight: 700;

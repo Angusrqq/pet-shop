@@ -98,13 +98,53 @@
 
     <footer class="site-footer">
         <div class="footer-container">
-            <ul class="footer-links">
-                <li><a href="{%  url 'catalog:catalog' %}">Каталог</a></li>
-                <li><a href="/about">О магазине</a></li>
-                <li><a href="/delivery">Доставка</a></li>
-            </ul>
-            <div class="footer-copyright">
-                <p>© 2026 Компания «Зоомагазин». Все права защищены.</p>
+            <div class="footer-top">
+                <div class="footer-links-col">
+                    <h3 class="footer-title">Каталог</h3>
+                    <ul class="footer-menu">
+                        <li><a href="{% url 'catalog:catalog' %}">Каталог</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h3 class="footer-title">О магазине</h3>
+                    <ul class="footer-menu">
+                        <li><a href="/about">О магазине</a></li>
+                        <li><a href="/delivery">Доставка</a></li>
+                        <li><a href="/sales">Акции</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contacts-col">
+                    <h3 class="footer-title">Контакты</h3>
+                    <div class="footer-phone">+7 (999) 999-99-99</div>
+                    <div class="footer-social">
+                        <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Telegram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 240.1 240.1">
+                            <linearGradient id="Oval_1_" gradientUnits="userSpaceOnUse" x1="-838.041" y1="660.581" x2="-838.041" y2="660.3427" gradientTransform="matrix(1000 0 0 -1000 838161 660581)">
+                            </linearGradient>
+                            <circle fill-rule="evenodd" clip-rule="evenodd" fill="url(#Oval_1_)" cx="120.1" cy="120.1" r="120.1"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M54.3,118.8c35-15.2,58.3-25.3,70-30.2 c33.3-13.9,40.3-16.3,44.8-16.4c1,0,3.2,0.2,4.7,1.4c1.2,1,1.5,2.3,1.7,3.3s0.4,3.1,0.2,4.7c-1.8,19-9.6,65.1-13.6,86.3 c-1.7,9-5,12-8.2,12.3c-7,0.6-12.3-4.6-19-9c-10.6-6.9-16.5-11.2-26.8-18c-11.9-7.8-4.2-12.1,2.6-19.1c1.8-1.8,32.5-29.8,33.1-32.3 c0.1-0.3,0.1-1.5-0.6-2.1c-0.7-0.6-1.7-0.4-2.5-0.2c-1.1,0.2-17.9,11.4-50.6,33.5c-4.8,3.3-9.1,4.9-13,4.8 c-4.3-0.1-12.5-2.4-18.7-4.4c-7.5-2.4-13.5-3.7-13-7.9C45.7,123.3,48.7,121.1,54.3,118.8z"/>
+                            </svg>
+                        </a>
+                        <a href="https://vk.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="VK">
+                            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 23.04C0 12.1788 0 6.74826 3.37413 3.37413C6.74826 0 12.1788 0 23.04 0H24.96C35.8212 0 41.2517 0 44.6259 3.37413C48 6.74826 48 12.1788 48 23.04V24.96C48 35.8212 48 41.2517 44.6259 44.6259C41.2517 48 35.8212 48 24.96 48H23.04C12.1788 48 6.74826 48 3.37413 44.6259C0 41.2517 0 35.8212 0 24.96V23.04Z"/>
+                            <path d="M25.54 34.5801C14.6 34.5801 8.3601 27.0801 8.1001 14.6001H13.5801C13.7601 23.7601 17.8 27.6401 21 28.4401V14.6001H26.1602V22.5001C29.3202 22.1601 32.6398 18.5601 33.7598 14.6001H38.9199C38.0599 19.4801 34.4599 23.0801 31.8999 24.5601C34.4599 25.7601 38.5601 28.9001 40.1201 34.5801H34.4399C33.2199 30.7801 30.1802 27.8401 26.1602 27.4401V34.5801H25.54Z" fill="white"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-payment">
+                <img src="https://logo-teka.com/wp-content/uploads/2025/06/mir-logo.svg" alt="Мир" style="max-width:100px;" />
+                <img src="https://logo-teka.com/wp-content/uploads/2025/06/sbp-logo.svg" alt="СБП" style="max-width:110px;" />
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Интернет-магазин товаров для животных «Зоомагазин»</p>
+                <p class="footer-policy">
+                    <a href="https://en.wikipedia.org/wiki/Privacy_policy" target="_blank" rel="noopener noreferrer">Политика об обработке персональных данных</a>
+                </p>
             </div>
         </div>
     </footer>
