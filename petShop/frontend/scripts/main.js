@@ -206,8 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
             sliders.push(slider);
             container.classList.add('slider-initialized');
             container.setAttribute('data-slider-id', index);
-            
-            console.log(`Слайдер ${index} инициализирован, товаров: ${slider.totalItems}, страниц: ${slider.totalPages}`);
         }
     });
 
