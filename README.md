@@ -5,6 +5,7 @@
 # Stack
  - Python 3.13
  - Django 6.0
+ - Docker
 
 # Setup
 
@@ -25,8 +26,16 @@
 ## Environment variables
 create a `.env` file in project root
 ```
+POSTGRES_USER='your user'
+POSTGRES_PASSWORD='your password'
+POSTGRES_DB='your db name'
+
+pg_host='your host'
 DJANGO_SECRET_KEY=your_key
 ```
+> [!NOTE]
+> if you are going to use docker, `pg_host` should be the same name as the postgres service in `docker-compose.yml`.
+
 
 ## Django setup
 
@@ -34,9 +43,21 @@ DJANGO_SECRET_KEY=your_key
 > `manage.py` is inside `petShop/backend`.
 
 ### Migrations
+
+> [!IMPORTANT]
+> If you want to run commands directly in the container you should use
+> ```
+> docker exec <django container name> <command>
+> ```
+> For example the migrate command with the provided `docker-compose.yml` & `Dockerfile` will look like this:
+> ```
+> docker exec django_app python manage.py migrate
+> ```
+
 ```
 python manage.py migrate
 ```
+
 > [!NOTE]
 > you can create a superuser by
 > ```
