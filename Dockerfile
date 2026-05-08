@@ -1,12 +1,15 @@
-FROM python:3.13-slim
+FROM python:3.13.2-alpine3.21
 
-WORKDIR /app/petshop/backend
+WORKDIR /app/backend
+
+RUN apk add --no-cache \
+    postgresql-dev \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    python3-dev
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
 EXPOSE 8000
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
