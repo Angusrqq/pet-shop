@@ -45,6 +45,15 @@
                 <a href="/about">О магазине</a>
                 <a href="{%  url 'catalog:catalog' %}">Каталог</a>
                 <a href="/delivery">Доставка</a>
+                <div class="wishlist-icon-wrapper">
+                    <a href="/wishlist" class="nav-with-icon">
+                        <svg class="svg-icon wishlist-icon" width="512" height="512" xml:space="preserve" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="256" cy="128" r="128"/>
+                            <path d="M7 3C4.23858 3 2 5.21619 2 7.95C2 10.157 2.87466 15.3947 11.4875 20.6903C11.7994 20.8821 12.2006 20.8821 12.5125 20.6903C21.1253 15.3947 22 10.157 22 7.95C22 5.21619 19.7614 3 17 3C14.2386 3 12 6 12 6C12 6 9.76142 3 7 3Z" stroke="" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Избранное</span>
+                    </a>
+                </div>
                 {% if not user.is_authenticated %}
                     <a href="{% url 'users:auth' %}" class="nav-with-icon">
                         <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xml:space="preserve" width="512" height="512">

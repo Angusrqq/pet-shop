@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.orders',
     'apps.search',
     'apps.categories',
+    'apps.wishlist',
     'mptt',
 ]
 

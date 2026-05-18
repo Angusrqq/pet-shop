@@ -285,6 +285,15 @@ nav a:hover, .svg-icon:hover {
     fill: currentColor;
 }
 
+.wishlist-icon{
+    fill: none;
+    stroke: currentColor;
+}
+
+.wishlist-icon:hover{
+    stroke: var(--accents);
+}
+
 .avatar {
     width: 40px;
     height: 40px;
@@ -371,6 +380,17 @@ nav a:hover, .svg-icon:hover {
     fill: none;
     stroke-width: 2;
     stroke-linecap: round;
+}
+
+/* wishlist */
+
+.wishlist-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.add-to-wishlist-btn{
+    position: relative;
 }
 
 /* footer */
@@ -806,6 +826,26 @@ nav a:hover, .svg-icon:hover {
 
 /* product_detailed */
 
+.product-btn-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.cart-form {
+    flex: 1;
+    margin: 0;
+}
+
+.add-to-wishlist-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
 .product-page {
     padding: 2rem 0;
     display: flex;
@@ -843,7 +883,7 @@ nav a:hover, .svg-icon:hover {
     font-size: 1.4rem;
     font-weight: 700;
     color: var(--main-contrast);
-    /* text-align: center; */
+    text-align: center;
 }
 
 .product-side {
@@ -893,7 +933,7 @@ nav a:hover, .svg-icon:hover {
     display: inline-block;
     margin-bottom: 1rem;
 }
-.back-link:hover { color: var(--main-contrast); }
+.back-link:hover { color: var(--accents); }
 
 .layout {
     display: flex;

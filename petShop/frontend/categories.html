@@ -15,13 +15,11 @@
         {% for category in categories %}
             <li class="product-item">
             {% if category.is_leaf_node %}
-                {# no children, go straight to products #}
                 <a href="{% url 'catalog:catalog' category.pk %}">
                     <img src="{{ category.image.url }}" alt="{{ category.name }}" width="100">
                 </a>
                 <h3>{{ category.name }}</h3>
             {% else %}
-                {# has children, drill deeper #}
                 <a href="{% url 'categories:category_detail' category.pk %}">
                     <img src="{{ category.image.url }}" alt="{{ category.name }}" width="100">
                     <h3>{{ category.name }}</h3>
