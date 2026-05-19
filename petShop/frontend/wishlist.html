@@ -4,5 +4,16 @@
 <div class="container wishlist">
     <a class="back-link" href="{% url 'catalog:catalog' %}">← Вернуться в каталог</a>
     <h1>Избранное</h1>
+    {% if items %}
+    <ul class="product-list">
+        {% for item in items %}
+            {% with product=item.product %}
+                {% include 'modules/compactProductView.html' %}
+            {% endwith %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">Вы ещё ничего не добавили в избранное.</p>
+    {% endif %}
 </div>
 {% endblock %}

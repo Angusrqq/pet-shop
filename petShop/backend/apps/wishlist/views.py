@@ -1,28 +1,41 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
+from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from apps.catalog.models import Product
+from .models import Wishlist
+
+def get_wishlist(request):
+    if request.user.is_authenticated:
+        return Wishlist.objects.filter(user=request.user)
+    return Wishlist.objects.filter(session_key=request.session.session_key)
 
 def wishlist(request):
-    return render(request, 'wishlist.html')
+    items = get_wishlist(request).select_related('product')
+    return render(request, 'wishlist.html', {'items': items})
 
-# @require_POST
-# def add_to_wishlist(request, product_id):
-#     cart = Cart(request)
-#     product = get_object_or_404(Product, id=product_id)
-#     next_url = request.POST.get('next') or request.GET.get('next') or 'cart:cart'
+@require_POST
+def toggle_wishlist(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
 
-#     if cart.cart.get(str(product_id)) and product.stock < cart.cart[str(product_id)]['quantity'] + 1:
-#         messages.error(request, 'Недостаточно товара в наличии')
-#         return redirect(next_url)
-    
-#     if cart.cart.get(str(product_id)) == None:
-#         messages.success(request, 'Товар добавлен в корзину!')
+    if request.user.is_authenticated:
+        item, created = Wishlist.objects.get_or_create(user=request.user, product=product)
+        if not created:
+            item.delete()
+            in_wishlist = False
+        else:
+            in_wishlist = True
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        item = Wishlist.objects.filter(session_key=request.session.session_key, product=product)
+        if item.exists():
+            item.delete()
+            in_wishlist = False
+        else:
+            Wishlist.objects.create(session_key=request.session.session_key, product=product)
+            in_wishlist = True
 
-#     cart.add(product, quantity=1)
-    
-#     if(next_url == 'cart:cart'):
-#         return redirect('cart:cart')
-    
-#     return JsonResponse({
-#         'cart_count': len(cart),
-#         'messages': get_messages_list(request)
-#     })
+    return JsonResponse({
+        'in_wishlist': in_wishlist,
+        'count': get_wishlist(request).count()
+    })

@@ -62,6 +62,26 @@ document.addEventListener('submit', function(e) {
     });
 });
 
+// Adding to wishlist
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.add-to-wishlist-btn');
+    if (!btn) return;
+
+    const productId = btn.dataset.productId;
+    const form = new FormData();
+    form.append('csrfmiddlewaretoken', document.cookie.match(/csrftoken=([^;]+)/)[1]);
+
+    fetch(`/wishlist/toggle/${productId}/`, {
+        method: 'POST',
+        body: form,
+    })
+    .then(res => res.json())
+    .then(data => {
+        btn.classList.toggle('active', data.in_wishlist);
+    });
+});
+
+
 // Eyes stuff
 const T = {
     light: { br: 13, me: 11 },
