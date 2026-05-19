@@ -78,6 +78,20 @@ document.addEventListener('click', function(e) {
     .then(res => res.json())
     .then(data => {
         btn.classList.toggle('active', data.in_wishlist);
+
+        let badge = document.querySelector('.wishlist-badge');
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'wishlist-badge';
+            document.querySelector('.wishlist-icon-wrapper').appendChild(badge);
+        }
+        if (data.count > 0) {
+            badge.textContent = data.count;
+            badge.style.display = 'flex';
+        } else {
+            badge.style.display = 'none';
+        }
+        if (data.messages) showMessages(data.messages);
     });
 });
 

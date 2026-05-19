@@ -1,8 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
+from django.contrib import messages
+from django.contrib.messages import get_messages
 from django.views.decorators.http import require_POST
 from apps.catalog.models import Product
 from .models import Wishlist
+
+def get_messages_list(request):
+    return [{'message': str(m), 'tags': m.tags} for m in get_messages(request)]
 
 def get_wishlist(request):
     if request.user.is_authenticated:
@@ -21,8 +26,10 @@ def toggle_wishlist(request, product_id):
         item, created = Wishlist.objects.get_or_create(user=request.user, product=product)
         if not created:
             item.delete()
+            messages.success(request, 'Товар удален из избранного')
             in_wishlist = False
         else:
+            messages.success(request, 'Товар добавлен в избранное')
             in_wishlist = True
     else:
         if not request.session.session_key:
@@ -30,12 +37,15 @@ def toggle_wishlist(request, product_id):
         item = Wishlist.objects.filter(session_key=request.session.session_key, product=product)
         if item.exists():
             item.delete()
+            messages.success(request, 'Товар удален из избранного')
             in_wishlist = False
         else:
             Wishlist.objects.create(session_key=request.session.session_key, product=product)
+            messages.success(request, 'Товар добавлен в избранное')
             in_wishlist = True
 
     return JsonResponse({
         'in_wishlist': in_wishlist,
-        'count': get_wishlist(request).count()
+        'count': get_wishlist(request).count(),
+        'messages': get_messages_list(request)
     })

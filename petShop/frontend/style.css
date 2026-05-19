@@ -29,8 +29,9 @@
 }
 
 :root{
+    --wishlist: #ff6b6b;
     --elastic-out: cubic-bezier(0.5, 1.8, 0.3, 0.8);
-    --transition: background 0.4s, color 0.4s, transform 0.3s var(--elastic-out), opacity 0.15s ease, border 0.3s;
+    --transition: background 0.4s, color 0.4s, transform 0.3s var(--elastic-out), opacity 0.15s ease, border 0.3s, fill 0.3s, stroke 0.3s;
 }
 
 *{
@@ -291,7 +292,7 @@ nav a:hover, .svg-icon:hover {
 }
 
 .wishlist-icon:hover{
-    stroke: var(--accents);
+    stroke: var(--wishlist);
 }
 
 .avatar {
@@ -389,8 +390,47 @@ nav a:hover, .svg-icon:hover {
     display: inline-flex;
 }
 
-.add-to-wishlist-btn{
+.add-to-wishlist-btn {
     position: relative;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--secondary);
+    flex-shrink: 0;
+}
+
+.add-to-wishlist-btn svg {
+    fill: none;
+    stroke: currentColor;
+    transition: var(--transition);
+}
+
+.add-to-wishlist-btn.active svg{
+    fill: var(--wishlist);
+    color: var(--wishlist);
+    stroke: var(--wishlist);
+}
+
+
+.wishlist-badge {
+    position: absolute;
+    top: -6px;
+    right: 0px;
+    background: var(--wishlist);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    line-height: 1;
 }
 
 /* footer */
@@ -837,22 +877,6 @@ nav a:hover, .svg-icon:hover {
 .cart-form {
     flex: 1;
     margin: 0;
-}
-
-.add-to-wishlist-btn {
-    background: none;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--secondary);
-    flex-shrink: 0;
-}
-
-.add-to-wishlist-btn.active svg{
-    fill: var(--accents);
-    color: var(--accents);
 }
 
 .product-page {
