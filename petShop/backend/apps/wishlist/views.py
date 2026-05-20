@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.messages import get_messages
@@ -49,3 +49,15 @@ def toggle_wishlist(request, product_id):
         'count': get_wishlist(request).count(),
         'messages': get_messages_list(request)
     })
+
+@require_POST
+def clear_wishlist(request):
+    if request.user.is_authenticated:
+        Wishlist.objects.filter(user=request.user).delete()
+    else:
+        session_key = request.session.session_key
+        if session_key:
+            Wishlist.objects.filter(session_key=session_key).delete()
+    
+    messages.success(request, 'Избранное полностью очищено')
+    return redirect('wishlist:wishlist')

@@ -5,6 +5,10 @@
     <a class="back-link" href="{% url 'catalog:catalog' %}">← Вернуться в каталог</a>
     <h1>Избранное</h1>
     {% if items %}
+    <form class="clear-form-wishlist" method="post" action="{% url 'wishlist:clear_wishlist' %}">
+        {% csrf_token %}
+        <button type="submit">Очистить избранное</button>
+    </form>
     <ul class="product-list">
         {% for item in items %}
             {% with product=item.product %}

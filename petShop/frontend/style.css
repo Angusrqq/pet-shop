@@ -29,7 +29,6 @@
 }
 
 :root{
-    --wishlist: #ff6b6b;
     --elastic-out: cubic-bezier(0.5, 1.8, 0.3, 0.8);
     --transition: background 0.4s, color 0.4s, transform 0.3s var(--elastic-out), opacity 0.15s ease, border 0.3s, fill 0.3s, stroke 0.3s;
 }
@@ -292,7 +291,7 @@ nav a:hover, .svg-icon:hover {
 }
 
 .wishlist-icon:hover{
-    stroke: var(--wishlist);
+    stroke: var(--accents);
 }
 
 .avatar {
@@ -409,9 +408,9 @@ nav a:hover, .svg-icon:hover {
 }
 
 .add-to-wishlist-btn.active svg{
-    fill: var(--wishlist);
-    color: var(--wishlist);
-    stroke: var(--wishlist);
+    fill: var(--accents);
+    color: var(--accents);
+    stroke: var(--accents);
 }
 
 
@@ -419,8 +418,8 @@ nav a:hover, .svg-icon:hover {
     position: absolute;
     top: -6px;
     right: 0px;
-    background: var(--wishlist);
-    color: #fff;
+    background: var(--accents);
+    color: var(--main);
     font-size: 0.65rem;
     font-weight: 700;
     min-width: 16px;
@@ -432,6 +431,17 @@ nav a:hover, .svg-icon:hover {
     padding: 0 3px;
     line-height: 1;
 }
+
+.clear-form-wishlist button {
+    background: none;
+    border: none;
+    color: var(--darker-text);
+    font-size: 0.82rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.clear-form-wishlist button:hover { color: var(--accents); }
 
 /* footer */
 
